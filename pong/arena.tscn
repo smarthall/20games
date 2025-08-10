@@ -1,8 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmmhrsdnpseeb"]
+[gd_scene load_steps=4 format=3 uid="uid://dmmhrsdnpseeb"]
 
 [ext_resource type="LabelSettings" uid="uid://dbp54m3m7y005" path="res://ScoreLabelSetting.tres" id="1_ubfh8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubfh8"]
+size = Vector2(20, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_444vf"]
+size = Vector2(15, 15)
 
 [node name="Arena" type="Control"]
 layout_mode = 3
@@ -12,7 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ScreenBack" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,15 +34,9 @@ grow_horizontal = 2
 grow_vertical = 2
 ratio = 2.2
 
-[node name="ColorRect" type="ColorRect" parent="AspectRatioContainer"]
+[node name="PlayAreaBackground" type="ColorRect" parent="AspectRatioContainer"]
 layout_mode = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="AspectRatioContainer"]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.466181, 0.466181, 0.466181, 1)
 
 [node name="Scores" type="Control" parent="."]
 layout_mode = 1
@@ -68,13 +66,41 @@ text = "12"
 label_settings = ExtResource("1_ubfh8")
 horizontal_alignment = 1
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="LocalPlayer" type="CharacterBody2D" parent="."]
+position = Vector2(40, 324)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(40, 311)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LocalPlayer"]
 shape = SubResource("RectangleShape2D_ubfh8")
 
-[node name="ColorRect" type="ColorRect" parent="CharacterBody2D"]
-offset_right = 40.0
+[node name="ColorRect" type="ColorRect" parent="LocalPlayer"]
+offset_left = -10.0
+offset_top = -40.0
+offset_right = 10.0
 offset_bottom = 40.0
 color = Color(6.06447e-06, 0.72595, 0.231214, 1)
+
+[node name="RemotePlayer" type="CharacterBody2D" parent="."]
+position = Vector2(1112, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RemotePlayer"]
+shape = SubResource("RectangleShape2D_ubfh8")
+
+[node name="ColorRect" type="ColorRect" parent="RemotePlayer"]
+offset_left = -10.0
+offset_top = -40.0
+offset_right = 10.0
+offset_bottom = 40.0
+color = Color(0.796954, 0.135906, 0.174185, 1)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(576, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_444vf")
+
+[node name="ColorRect" type="ColorRect" parent="CharacterBody2D"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+color = Color(0.589376, 0.306418, 0.733613, 1)
