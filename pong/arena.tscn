@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmmhrsdnpseeb"]
+[gd_scene load_steps=6 format=3 uid="uid://dmmhrsdnpseeb"]
 
 [ext_resource type="LabelSettings" uid="uid://dbp54m3m7y005" path="res://ScoreLabelSetting.tres" id="1_ubfh8"]
 [ext_resource type="Script" uid="uid://l2ucr3d2v3qj" path="res://paddle_controller.gd" id="2_444vf"]
+[ext_resource type="Script" uid="uid://cwbacecmrcq1c" path="res://ball.gd" id="3_27ga2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubfh8"]
 size = Vector2(20, 80)
@@ -96,13 +97,15 @@ offset_right = 10.0
 offset_bottom = 40.0
 color = Color(0.796954, 0.135906, 0.174185, 1)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Ball" type="CharacterBody2D" parent="."]
 position = Vector2(576, 324)
+script = ExtResource("3_27ga2")
+direction = Vector2(30, 30)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("RectangleShape2D_444vf")
 
-[node name="ColorRect" type="ColorRect" parent="CharacterBody2D"]
+[node name="ColorRect" type="ColorRect" parent="Ball"]
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 15.0
