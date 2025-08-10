@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmmhrsdnpseeb"]
+[gd_scene load_steps=5 format=3 uid="uid://dmmhrsdnpseeb"]
 
 [ext_resource type="LabelSettings" uid="uid://dbp54m3m7y005" path="res://ScoreLabelSetting.tres" id="1_ubfh8"]
+[ext_resource type="Script" uid="uid://l2ucr3d2v3qj" path="res://paddle_controller.gd" id="2_444vf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubfh8"]
 size = Vector2(20, 80)
@@ -68,6 +69,7 @@ horizontal_alignment = 1
 
 [node name="LocalPlayer" type="CharacterBody2D" parent="."]
 position = Vector2(40, 324)
+script = ExtResource("2_444vf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LocalPlayer"]
 shape = SubResource("RectangleShape2D_ubfh8")
@@ -81,6 +83,8 @@ color = Color(6.06447e-06, 0.72595, 0.231214, 1)
 
 [node name="RemotePlayer" type="CharacterBody2D" parent="."]
 position = Vector2(1112, 324)
+script = ExtResource("2_444vf")
+player_type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RemotePlayer"]
 shape = SubResource("RectangleShape2D_ubfh8")
