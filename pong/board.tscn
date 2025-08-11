@@ -54,7 +54,7 @@ color = Color(0.220101, 0.288454, 1, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource("3_8l818")]
+[node name="ScoreGUI" parent="CanvasLayer" instance=ExtResource("3_8l818")]
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PackedVector2Array(576, 0, 576, 648)
