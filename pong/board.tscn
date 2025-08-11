@@ -26,6 +26,7 @@ action_down = "RemoteDown"
 
 [node name="Ball" parent="." instance=ExtResource("2_psm7c")]
 position = Vector2(576, 324)
+speed = 500.0
 
 [node name="TopWall" type="StaticBody2D" parent="."]
 scale = Vector2(1152, 15)
