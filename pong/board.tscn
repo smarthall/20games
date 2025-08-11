@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3euv2ekxge8r"]
+[gd_scene load_steps=5 format=3 uid="uid://c3euv2ekxge8r"]
 
 [ext_resource type="PackedScene" uid="uid://dsjsrqfeqh1to" path="res://paddle.tscn" id="1_p0ybc"]
 [ext_resource type="PackedScene" uid="uid://10jjth5ovx" path="res://ball.tscn" id="2_psm7c"]
+[ext_resource type="PackedScene" uid="uid://bdb8fgl1ap2aq" path="res://boardgui.tscn" id="3_8l818"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0ybc"]
 size = Vector2(1, 1)
@@ -50,3 +51,12 @@ shape = SubResource("RectangleShape2D_p0ybc")
 offset_right = 1.0
 offset_bottom = 1.0
 color = Color(0.220101, 0.288454, 1, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource("3_8l818")]
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(576, 0, 576, 648)
+width = 2.0
+default_color = Color(0.219608, 0.290196, 1, 1)

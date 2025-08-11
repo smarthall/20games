@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdb8fgl1ap2aq"]
+
+[ext_resource type="LabelSettings" uid="uid://dtinhsxcjk56w" path="res://ScoreLabelSetting.tres" id="1_x2eel"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="LeftPlayerScore" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = ExtResource("1_x2eel")
+horizontal_alignment = 1
+
+[node name="RightPlayerScore" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = ExtResource("1_x2eel")
+horizontal_alignment = 1
