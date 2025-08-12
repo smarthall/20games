@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuj1umrqtbcuy"]
+
+[ext_resource type="Script" uid="uid://bk67q8g45q4ms" path="res://rigid_body_2d.gd" id="1_u52ul"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xgho"]
+
+[node name="Level" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(400, 250)
+script = ExtResource("1_u52ul")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_5xgho")
+
+[node name="ColorRect" type="ColorRect" parent="RigidBody2D"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
