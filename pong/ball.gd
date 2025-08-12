@@ -18,14 +18,7 @@ func _physics_process(delta: float) -> void:
         direction = direction.bounce(collision.get_normal())
 
     if position.x < -distance_off_screen:
-        reset()
         emit_signal("ball_out_on_left")
 
     elif position.x > get_viewport_rect().size.x + distance_off_screen:
-        reset()
         emit_signal("ball_out_on_right")
-
-func reset():
-    position = get_viewport_rect().size / 2
-    direction = Vector2.LEFT
-    in_motion = true
