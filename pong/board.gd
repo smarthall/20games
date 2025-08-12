@@ -9,6 +9,7 @@ enum ServeState {
 @onready var ball := $Ball
 @onready var game_over_sound := $GameEndSound
 @onready var score_sound := $ScoreSound
+@onready var music := $Music
 
 const winning_score := 6
 
@@ -28,6 +29,7 @@ var _is_game_over: bool = false
 func _ready() -> void:
 	randomize()
 	_ball_reset()
+	music.play()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -73,11 +75,14 @@ func _restart_game() -> void:
 	ball.in_motion = true
 	_ball_reset()
 
+	music.play()
+
 func _game_over(winner: String) -> void:
 	_is_game_over = true
 	gui.win_text = winner + " Wins"
 	ball.in_motion = false
 	game_over_sound.play()
+	music.stop()
 
 func _get_serve_direction() -> Vector2:
 	var vector := Vector2.LEFT

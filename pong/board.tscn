@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3euv2ekxge8r"]
+[gd_scene load_steps=9 format=3 uid="uid://c3euv2ekxge8r"]
 
 [ext_resource type="Script" uid="uid://cfqd7xnabgsqf" path="res://board.gd" id="1_jqgjh"]
 [ext_resource type="PackedScene" uid="uid://dsjsrqfeqh1to" path="res://paddle.tscn" id="1_p0ybc"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bdb8fgl1ap2aq" path="res://boardgui.tscn" id="3_8l818"]
 [ext_resource type="AudioStream" uid="uid://dwxgjg2p1u4if" path="res://Resources/Audio/game_end.ogg" id="5_vf5bc"]
 [ext_resource type="AudioStream" uid="uid://bkr43hiidc2d8" path="res://Resources/Audio/score.ogg" id="6_mgc1s"]
+[ext_resource type="AudioStream" uid="uid://but82iepsmrb0" path="res://Resources/Audio/Music/Alpha Dance.ogg" id="7_rq8yp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0ybc"]
 size = Vector2(1, 1)
@@ -74,6 +75,11 @@ stream = ExtResource("5_vf5bc")
 
 [node name="ScoreSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_mgc1s")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_rq8yp")
+bus = &"Music"
+parameters/looping = true
 
 [connection signal="ball_out_on_left" from="Ball" to="." method="_on_ball_ball_out_on_left"]
 [connection signal="ball_out_on_right" from="Ball" to="." method="_on_ball_ball_out_on_right"]
