@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdb8fgl1ap2aq"]
+[gd_scene load_steps=3 format=3 uid="uid://bdb8fgl1ap2aq"]
 
 [ext_resource type="LabelSettings" uid="uid://dtinhsxcjk56w" path="res://ScoreLabelSetting.tres" id="1_x2eel"]
+[ext_resource type="Script" uid="uid://y6dhdoqbpg53" path="res://boardgui.gd" id="1_ymapm"]
 
 [node name="BoardGUI" type="Control"]
 layout_mode = 3
@@ -9,6 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ymapm")
+left_score = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
