@@ -8,7 +8,7 @@ extends CharacterBody2D
 	get:
 		return color
 
-@export var speed: float = 200.0
+@export var speed: float = 500.0
 
 @export var action_up: String = "LocalUp"
 @export var action_down: String = "LocalDown"

@@ -3,6 +3,9 @@ extends Node2D
 @onready var gui := $CanvasLayer/ScoreGUI
 @onready var ball := $Ball
 
+const left_player_name := "Green"
+const right_player_name := "Red"
+
 var _left_score: int = 0
 var _right_score: int = 0
 var _is_game_over: bool = false
@@ -33,10 +36,10 @@ func _update_scores() -> void:
 	gui.right_score = _right_score
 
 	if _left_score >= 5:
-		_game_over("Green")
+		_game_over(left_player_name)
 
 	elif _right_score >= 5:
-		_game_over("Red")
+		_game_over(right_player_name)
 
 	else:
 		gui.win_text = ""

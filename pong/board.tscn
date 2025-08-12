@@ -19,16 +19,17 @@ color = Color(0.140447, 0.140447, 0.140447, 1)
 [node name="LeftPaddle" parent="." instance=ExtResource("1_p0ybc")]
 position = Vector2(40, 324)
 color = Color(0.381413, 0.684276, 0.383954, 1)
+speed = 200.0
 
 [node name="RightPaddle" parent="." instance=ExtResource("1_p0ybc")]
 position = Vector2(1112, 324)
 color = Color(0.721527, 0.342026, 0.242952, 1)
+speed = 200.0
 action_up = "RemoteUp"
 action_down = "RemoteDown"
 
 [node name="Ball" parent="." instance=ExtResource("2_psm7c")]
 position = Vector2(576, 324)
-speed = 500.0
 
 [node name="TopWall" type="StaticBody2D" parent="."]
 scale = Vector2(1152, 15)
