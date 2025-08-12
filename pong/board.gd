@@ -7,6 +7,8 @@ enum ServeState {
 
 @onready var gui := $CanvasLayer/ScoreGUI
 @onready var ball := $Ball
+@onready var game_over_sound := $GameEndSound
+@onready var score_sound := $ScoreSound
 
 const winning_score := 6
 
@@ -24,6 +26,7 @@ var _serve_state: ServeState = ServeState.LEFT
 var _is_game_over: bool = false
 
 func _ready() -> void:
+	randomize()
 	_ball_reset()
 
 func _input(event: InputEvent) -> void:
@@ -34,11 +37,13 @@ func _input(event: InputEvent) -> void:
 
 func _on_ball_ball_out_on_right() -> void:
 	_left_score += 1
+	score_sound.play()
 	_update_scores()
 	_ball_reset()
 
 func _on_ball_ball_out_on_left() -> void:
 	_right_score += 1
+	score_sound.play()
 	_update_scores()
 	_ball_reset()
 
@@ -72,6 +77,7 @@ func _game_over(winner: String) -> void:
 	_is_game_over = true
 	gui.win_text = winner + " Wins"
 	ball.in_motion = false
+	game_over_sound.play()
 
 func _get_serve_direction() -> Vector2:
 	var vector := Vector2.LEFT

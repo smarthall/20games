@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3euv2ekxge8r"]
+[gd_scene load_steps=8 format=3 uid="uid://c3euv2ekxge8r"]
 
 [ext_resource type="Script" uid="uid://cfqd7xnabgsqf" path="res://board.gd" id="1_jqgjh"]
 [ext_resource type="PackedScene" uid="uid://dsjsrqfeqh1to" path="res://paddle.tscn" id="1_p0ybc"]
 [ext_resource type="PackedScene" uid="uid://10jjth5ovx" path="res://ball.tscn" id="2_psm7c"]
 [ext_resource type="PackedScene" uid="uid://bdb8fgl1ap2aq" path="res://boardgui.tscn" id="3_8l818"]
+[ext_resource type="AudioStream" uid="uid://dwxgjg2p1u4if" path="res://Resources/Audio/game_end.ogg" id="5_vf5bc"]
+[ext_resource type="AudioStream" uid="uid://bkr43hiidc2d8" path="res://Resources/Audio/score.ogg" id="6_mgc1s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0ybc"]
 size = Vector2(1, 1)
@@ -66,6 +68,12 @@ left_score = 0
 points = PackedVector2Array(576, 0, 576, 648)
 width = 2.0
 default_color = Color(0.219608, 0.290196, 1, 1)
+
+[node name="GameEndSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_vf5bc")
+
+[node name="ScoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_mgc1s")
 
 [connection signal="ball_out_on_left" from="Ball" to="." method="_on_ball_ball_out_on_left"]
 [connection signal="ball_out_on_right" from="Ball" to="." method="_on_ball_ball_out_on_right"]
