@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		instance.set_obstacle_positions()
 		instance.set_biome(BIOMES[randi() % BIOMES.size()])
 
-		var last_biome := biome_instances.size() - 1
-		instance.position.x = biome_instances[last_biome].position.x + biome_instances[last_biome].width
+		var last_biome :Node = biome_instances[biome_instances.size() - 1]
+		instance.position.x = last_biome.position.x + last_biome.width
 
 		biome_instances.append(instance)
