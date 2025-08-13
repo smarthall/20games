@@ -20,4 +20,4 @@ sprite_frames = ExtResource("2_vonw3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("CircleShape2D_5xgho")
 
-[node name="LevelScroller" type="Node" parent="."]
+[node name="BiomeScenes" type="Node2D" parent="."]

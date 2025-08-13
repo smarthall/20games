@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://cj6j1htyqexkd"]
 
 [ext_resource type="Texture2D" uid="uid://qg65mytvpya5" path="res://Resources/Biomes/rockSnowDown.png" id="1_278cf"]
-[ext_resource type="Script" uid="uid://c8ixf18qkftfw" path="res://Biome.gd" id="1_t3eoq"]
+[ext_resource type="Script" uid="uid://c8ixf18qkftfw" path="res://biome.gd" id="1_t3eoq"]
 [ext_resource type="Texture2D" uid="uid://decvoxofxihcv" path="res://Resources/Biomes/groundSnow.png" id="2_y1l0n"]
 [ext_resource type="Texture2D" uid="uid://72yjxngpn2j0" path="res://Resources/Biomes/rockSnow.png" id="4_0j4of"]
 
