@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://ceocu7dr7mca1"]
+
+[ext_resource type="Texture2D" uid="uid://icbkvrut86th" path="res://Resources/Biomes/rockGrassDown.png" id="1_ds1n4"]
+[ext_resource type="Script" uid="uid://c8ixf18qkftfw" path="res://Biome.gd" id="1_m2y1e"]
+[ext_resource type="Texture2D" uid="uid://bt625lu00la1h" path="res://Resources/Biomes/groundDirt.png" id="2_rrvvx"]
+[ext_resource type="Texture2D" uid="uid://dtju7lqfge8si" path="res://Resources/Biomes/rockGrass.png" id="4_6vi62"]
+
+[resource]
+script = ExtResource("1_m2y1e")
+ground = ExtResource("2_rrvvx")
+up = ExtResource("4_6vi62")
+down = ExtResource("1_ds1n4")
+metadata/_custom_type_script = "uid://c8ixf18qkftfw"

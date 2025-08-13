@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://dnauikrqvayu8"]
+
+[ext_resource type="Texture2D" uid="uid://j5dm7hjyu6ob" path="res://Resources/Plane/planeRed1.png" id="1_0o3xk"]
+[ext_resource type="Texture2D" uid="uid://umlpfn43ws8p" path="res://Resources/Plane/planeRed2.png" id="2_0vqh8"]
+[ext_resource type="Texture2D" uid="uid://cs7sw1c6jbt0n" path="res://Resources/Plane/planeRed3.png" id="3_8tawy"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0o3xk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0vqh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8tawy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0vqh8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

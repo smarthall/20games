@@ -1,20 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://cuj1umrqtbcuy"]
+[gd_scene load_steps=5 format=3 uid="uid://cuj1umrqtbcuy"]
 
-[ext_resource type="Script" uid="uid://bk67q8g45q4ms" path="res://rigid_body_2d.gd" id="1_u52ul"]
+[ext_resource type="Script" uid="uid://sgkyms3va5t3" path="res://level.gd" id="1_oi3di"]
+[ext_resource type="Script" uid="uid://bk67q8g45q4ms" path="res://player.gd" id="1_u52ul"]
+[ext_resource type="SpriteFrames" uid="uid://dnauikrqvayu8" path="res://Resources/Plane/red_plane_fly.tres" id="2_vonw3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5xgho"]
+radius = 35.0
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_oi3di")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(400, 250)
+[node name="Player" type="RigidBody2D" parent="."]
+position = Vector2(152, 158)
 script = ExtResource("1_u52ul")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = ExtResource("2_vonw3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("CircleShape2D_5xgho")
 
-[node name="ColorRect" type="ColorRect" parent="RigidBody2D"]
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
+[node name="LevelScroller" type="Node" parent="."]
