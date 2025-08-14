@@ -1,23 +1,50 @@
 [gd_scene load_steps=5 format=3 uid="uid://cuj1umrqtbcuy"]
 
 [ext_resource type="Script" uid="uid://sgkyms3va5t3" path="res://level.gd" id="1_oi3di"]
-[ext_resource type="Script" uid="uid://bk67q8g45q4ms" path="res://player.gd" id="1_u52ul"]
-[ext_resource type="SpriteFrames" uid="uid://dnauikrqvayu8" path="res://Resources/Plane/red_plane_fly.tres" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://4ytsvi0hh5ls" path="res://player.tscn" id="2_vonw3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5xgho"]
-radius = 35.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oi3di"]
+size = Vector2(1152, 20)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oi3di"]
+font_size = 48
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_oi3di")
 
-[node name="Player" type="RigidBody2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("2_vonw3")]
 position = Vector2(152, 158)
-script = ExtResource("1_u52ul")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-sprite_frames = ExtResource("2_vonw3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CircleShape2D_5xgho")
 
 [node name="BiomeScenes" type="Node2D" parent="."]
+
+[node name="TooHigh" type="Area2D" parent="."]
+position = Vector2(576, -95)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TooHigh"]
+shape = SubResource("RectangleShape2D_oi3di")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_oi3di")
+horizontal_alignment = 1
+
+[connection signal="hit_obstacle" from="Player" to="." method="_on_player_hit_obstacle"]
+[connection signal="body_entered" from="TooHigh" to="." method="_on_too_high_body_entered"]
