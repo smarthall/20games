@@ -2,7 +2,7 @@ extends Node2D
 
 @export var biome_scene: PackedScene = preload("res://biome_objects.tscn")
 
-const speed := 150
+const speed := 300
 const BIOMES := [
 	preload("res://Resources/Biomes/dirt.tres"),
 	preload("res://Resources/Biomes/ice.tres"),
@@ -21,8 +21,7 @@ var gameover := false
 func _ready() -> void:
 	randomize()
 
-	var add_at_x := 0.0
-
+	# Create three biomes to make sure the screen is covered at all times
 	for i in range(3):
 		var instance = biome_scene.instantiate()
 
@@ -34,13 +33,12 @@ func _ready() -> void:
 		
 		instance.player_scored.connect(increment_score)
 
-		instance.position.x = add_at_x
-		add_at_x += instance.width
+	start_game()
 
 func _input(event):
 	if event.is_action_pressed("Flap") and not gameover:
 		player.flap()
-		
+
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
@@ -75,10 +73,21 @@ func _on_too_high_body_entered(_body: Node2D) -> void:
 func _on_player_hit_obstacle() -> void:
 	end_game()
 
+func start_game() -> void:
+	var add_at_x := 0.0
+
+	for i in range(3):
+		var instance :Node2D = biome_instances[i]
+		instance.position.x = add_at_x
+		add_at_x += instance.width
+
+	player.start()
+
 func increment_score() -> void:
 	score += 1
 
 	score_label.text = str(score)
 
-func end_game():
+func end_game() -> void:
 	gameover = true
+	player.stop()

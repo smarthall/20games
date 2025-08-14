@@ -41,7 +41,7 @@ collision_layer = 2
 texture = ExtResource("4_frv8b")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Down/Obstacle"]
-polygon = PackedVector2Array(-53, -118, 12, 119, 53, -118)
+polygon = PackedVector2Array(-53, -118, 12, 119, 53, -118, 52, -223, -61, -221)
 
 [node name="Score" type="Area2D" parent="Down"]
 position = Vector2(12, 250)

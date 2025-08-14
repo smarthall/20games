@@ -3,12 +3,20 @@ class_name Player
 
 signal hit_obstacle
 
-const flap_strength = 500
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var exhaust: CPUParticles2D = $Exhaust
+
+const flap_strength = 700
 const obstacle_layer = 1
 const score_layer = 2
 
-func _ready() -> void:
-	$AnimatedSprite2D.play("default")
+func start() -> void:
+	animated_sprite.play("default")
+	exhaust.emitting = true
+
+func stop() -> void:
+	animated_sprite.stop()
+	exhaust.emitting = false
 
 func flap() -> void:
 	apply_impulse(Vector2.UP * flap_strength, Vector2.ZERO)
