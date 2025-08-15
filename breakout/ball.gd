@@ -25,10 +25,10 @@ func resolve_collision(collision: KinematicCollision2D) -> void:
 
 	elif collider_layer & wall_collision_layer:
 		resolve_collision_with_walls(collision)
-		
+
 	else:
 		print("Unhandled Collision in layer: ", collider_layer)
-		print("  With node:", collider.get_name())
+		print("  with node:", collider.get_name())
 
 func resolve_collision_with_walls(collision: KinematicCollision2D) -> void:
 	velocity = velocity.bounce(collision.get_normal())
