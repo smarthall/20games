@@ -14,10 +14,12 @@ const BIOMES := [
 @onready var player: Player = $Player
 @onready var score_label: Label = $CanvasLayer/Control/ScoreLabel
 @onready var game_over_label: Label = $CanvasLayer/Control/GameOverLabel
+@onready var high_score_label: Label = $CanvasLayer/Control/HighScoreLabel
 
 @onready var initial_player_pos: Vector2 = $Player.position
 
 var biome_instances: Array = []
+var high_score := 0
 var score := 0
 var gameover := false
 
@@ -36,6 +38,7 @@ func _ready() -> void:
 		
 		instance.player_scored.connect(increment_score)
 
+	load_high_score()
 	start_game()
 
 func _input(event):
@@ -107,7 +110,30 @@ func zero_score() -> void:
 	score = 0
 	score_label.text = str(score)
 
+func load_high_score() -> void:
+	if FileAccess.file_exists("user://high_score.save"):
+		var save_file := FileAccess.open("user://high_score.save", FileAccess.READ)
+		high_score = save_file.get_var()
+		save_file.close()
+	print("High Score Loaded: ", high_score)
+
+	display_high_score()
+
+func save_high_score() -> void:
+	var save_file := FileAccess.open("user://high_score.save", FileAccess.WRITE)
+	save_file.store_var(high_score)
+	save_file.close()
+
+func display_high_score() -> void:
+	high_score_label.text = "High Score: " + str(high_score)
+
 func end_game() -> void:
 	gameover = true
 	player.stop()
 	game_over_label.show()
+
+	if score > high_score:
+		high_score = score
+
+		display_high_score()
+		save_high_score()

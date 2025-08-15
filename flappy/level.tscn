@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cuj1umrqtbcuy"]
+[gd_scene load_steps=12 format=3 uid="uid://cuj1umrqtbcuy"]
 
 [ext_resource type="Script" uid="uid://sgkyms3va5t3" path="res://level.gd" id="1_oi3di"]
 [ext_resource type="PackedScene" uid="uid://4ytsvi0hh5ls" path="res://player.tscn" id="2_vonw3"]
@@ -26,6 +26,9 @@ font_size = 72
 [sub_resource type="LabelSettings" id="LabelSettings_1ainy"]
 font = SubResource("SystemFont_f2txt")
 font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_vonw3"]
+font_size = 24
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_oi3di")
@@ -97,6 +100,19 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Press [ENTER] to restart"
 label_settings = SubResource("LabelSettings_1ainy")
+horizontal_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "High Score: "
+label_settings = SubResource("LabelSettings_vonw3")
 horizontal_alignment = 1
 
 [connection signal="hit_obstacle" from="Player" to="." method="_on_player_hit_obstacle"]
