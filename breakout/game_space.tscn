@@ -65,4 +65,4 @@ position = Vector2(0, -50)
 position = Vector2(526, 149)
 
 [node name="Brick2" parent="Bricks" instance=ExtResource("4_xq8gv")]
-position = Vector2(623, 149)
+position = Vector2(622, 149)
