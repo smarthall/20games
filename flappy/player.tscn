@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://4ytsvi0hh5ls"]
+[gd_scene load_steps=8 format=3 uid="uid://4ytsvi0hh5ls"]
 
 [ext_resource type="Script" uid="uid://bk67q8g45q4ms" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://c1oqf7qlnmttx" path="res://Resources/Plane/puffSmall.png" id="2_hqtel"]
 [ext_resource type="SpriteFrames" uid="uid://dnauikrqvayu8" path="res://Resources/Plane/red_plane_fly.tres" id="2_i3pqv"]
+[ext_resource type="AudioStream" uid="uid://8e54ihn6lyo4" path="res://Resources/Sounds/engine.ogg" id="4_hqtel"]
+[ext_resource type="AudioStream" uid="uid://sqopo7rhhokp" path="res://Resources/Sounds/hit.ogg" id="5_sweqy"]
+[ext_resource type="AudioStream" uid="uid://cg6xtcr2a261i" path="res://Resources/Sounds/score.ogg" id="6_2hs0m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5xgho"]
 radius = 35.0
@@ -31,5 +34,19 @@ sprite_frames = ExtResource("2_i3pqv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5xgho")
+
+[node name="EngineNoise" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_hqtel")
+volume_db = -8.0
+bus = &"Effects"
+parameters/looping = true
+
+[node name="HitNoise" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_sweqy")
+bus = &"Effects"
+
+[node name="ScoreNoise" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_2hs0m")
+bus = &"Effects"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

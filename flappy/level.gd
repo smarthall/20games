@@ -10,15 +10,24 @@ const BIOMES := [
 	preload("res://Resources/Biomes/snow.tres"),
 ]
 
+# Level
 @onready var biome_scenes := $BiomeScenes
+
+# Sounds
+@onready var high_score_sound: AudioStreamPlayer = $HighScoreSound
+@onready var game_over_sound: AudioStreamPlayer = $GameOverSound
+
+# Player
 @onready var player: Player = $Player
+@onready var initial_player_pos: Vector2 = $Player.position
+
+# Labels
 @onready var score_label: Label = $CanvasLayer/Control/ScoreLabel
 @onready var game_over_label: Label = $CanvasLayer/Control/GameOverLabel
 @onready var high_score_label: Label = $CanvasLayer/Control/HighScoreLabel
 
-@onready var initial_player_pos: Vector2 = $Player.position
-
 var biome_instances: Array = []
+var new_high_score := false
 var high_score := 0
 var score := 0
 var gameover := false
@@ -88,10 +97,12 @@ func _physics_process(delta: float) -> void:
 ## Called when the player collides with the 'too high' area (top of screen).
 ## Ends the game.
 func _on_too_high_body_entered(_body: Node2D) -> void:
+	play_hit_noise()
 	end_game()
 
 ## Called when the player hits an obstacle. Ends the game.
 func _on_player_hit_obstacle() -> void:
+	play_hit_noise()
 	end_game()
 
 ## Resets all game state and positions to start a new run. Repositions biomes,
@@ -110,7 +121,12 @@ func start_game() -> void:
 	game_over_label.hide()
 
 	zero_score()
+	new_high_score = false
 	gameover = false
+
+# Plays the hit noise from the players location
+func play_hit_noise() -> void:
+	player.hit()
 
 ## Increments the player's score by 1 and updates the score label.
 ## Does nothing if the game is over.
@@ -118,7 +134,13 @@ func increment_score() -> void:
 	if gameover:
 		return
 
+	player.score()
+
 	score += 1
+
+	if score > high_score && not new_high_score:
+		new_high_score = true
+		high_score_sound.play()
 
 	score_label.text = str(score)
 
@@ -133,7 +155,6 @@ func load_high_score() -> void:
 		var save_file := FileAccess.open("user://high_score.save", FileAccess.READ)
 		high_score = save_file.get_var()
 		save_file.close()
-	print("High Score Loaded: ", high_score)
 
 	display_high_score()
 
@@ -150,9 +171,13 @@ func display_high_score() -> void:
 ## Ends the game: sets gameover, stops the player, shows game over label,
 ## and updates/saves high score if a new record is set.
 func end_game() -> void:
+	if gameover:
+		return
+
 	gameover = true
 	player.stop()
 	game_over_label.show()
+	game_over_sound.play()
 
 	if score > high_score:
 		high_score = score

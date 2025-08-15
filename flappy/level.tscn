@@ -1,7 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cuj1umrqtbcuy"]
+[gd_scene load_steps=15 format=3 uid="uid://cuj1umrqtbcuy"]
 
 [ext_resource type="Script" uid="uid://sgkyms3va5t3" path="res://level.gd" id="1_oi3di"]
 [ext_resource type="PackedScene" uid="uid://4ytsvi0hh5ls" path="res://player.tscn" id="2_vonw3"]
+[ext_resource type="Texture2D" uid="uid://bx3gqqlnnr21i" path="res://Resources/background.png" id="3_oi3di"]
+[ext_resource type="AudioStream" uid="uid://cp5ebggwahmje" path="res://Resources/Sounds/gameover.ogg" id="4_0b4ue"]
+[ext_resource type="AudioStream" uid="uid://sfjpxbsecqiy" path="res://Resources/Sounds/highscore.ogg" id="5_f2txt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oi3di"]
 size = Vector2(1152, 20)
@@ -14,24 +17,33 @@ size = Vector2(20, 748)
 [sub_resource type="LabelSettings" id="LabelSettings_oi3di"]
 font = SubResource("SystemFont_vonw3")
 font_size = 48
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_oi3di"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0b4ue"]
 font = SubResource("SystemFont_oi3di")
 font_size = 72
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_f2txt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1ainy"]
 font = SubResource("SystemFont_f2txt")
 font_size = 28
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_vonw3"]
 font_size = 24
+font_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_oi3di")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576.5, 324)
+scale = Vector2(1.44375, 1.35)
+texture = ExtResource("3_oi3di")
 
 [node name="Player" parent="." instance=ExtResource("2_vonw3")]
 position = Vector2(152, 158)
@@ -114,6 +126,14 @@ grow_vertical = 0
 text = "High Score: "
 label_settings = SubResource("LabelSettings_vonw3")
 horizontal_alignment = 1
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_0b4ue")
+bus = &"Effects"
+
+[node name="HighScoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f2txt")
+bus = &"Effects"
 
 [connection signal="hit_obstacle" from="Player" to="." method="_on_player_hit_obstacle"]
 [connection signal="body_entered" from="OutOfBounds" to="." method="_on_too_high_body_entered"]

@@ -7,12 +7,18 @@ signal hit_obstacle
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var exhaust: CPUParticles2D = $Exhaust
+@onready var engine_noise: AudioStreamPlayer2D = $EngineNoise
+@onready var hit_noise: AudioStreamPlayer2D = $HitNoise
+@onready var score_noise: AudioStreamPlayer2D = $ScoreNoise
 
-const obstacle_layer = 1
-const score_layer = 2
+const obstacle_layer := 1
+const score_layer := 2
+const hit_noise_squelch_seconds := 0.1
 
 var reset_position: bool = false
 var stored_position: Vector2
+
+var squelch_hit_noise_until := 0.0
 
 ## Physics integration callback.
 ## When [code]reset_position[/code] is true (set by [code]reset_to()[/code]),
@@ -34,12 +40,14 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 func start() -> void:
 	animated_sprite.play("default")
 	exhaust.emitting = true
+	engine_noise.play()
 
 ## Halts player activity: stops the animation and exhaust particles. Call on
 ## game over, pause, or when disabling player control.
 func stop() -> void:
 	animated_sprite.stop()
 	exhaust.emitting = false
+	engine_noise.stop()
 
 ## Schedules a safe reset of the player's transform for the next physics tick.
 ##
@@ -57,6 +65,19 @@ func reset_to(new_position) -> void:
 ## [code]flap_strength[/code]. Call in response to input.
 func flap() -> void:
 	apply_impulse(Vector2.UP * flap_strength, Vector2.ZERO)
+
+# Plays the noise for hitting something
+func hit() -> void:
+	var now := Time.get_ticks_msec() * 0.001
+	if now < squelch_hit_noise_until:
+		return
+
+	squelch_hit_noise_until = now + hit_noise_squelch_seconds	
+	hit_noise.play()
+
+# Plays the sound for scoring a point
+func score() -> void:
+	score_noise.play()
 
 ## Collision callback for bodies entering the player's collider. Emits the
 ## [code]hit_obstacle[/code] signal when contacting static geometry (e.g.,
