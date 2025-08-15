@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bbk25xfktogup"]
+[gd_scene load_steps=7 format=3 uid="uid://bbk25xfktogup"]
 
 [ext_resource type="PackedScene" uid="uid://c6rpcu815yae4" path="res://player.tscn" id="1_63fvg"]
 [ext_resource type="Script" uid="uid://uu45niv78pa0" path="res://game_space.gd" id="1_ihldm"]
+[ext_resource type="PackedScene" uid="uid://jgfp28ghomnu" path="res://ball.tscn" id="3_75ac5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n10u8"]
 size = Vector2(1172, 20)
@@ -16,6 +17,8 @@ size = Vector2(20, 668)
 script = ExtResource("1_ihldm")
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
 [node name="TopCollisionShape" type="CollisionShape2D" parent="Boundaries"]
 position = Vector2(576, 0)
@@ -49,3 +52,8 @@ offset_bottom = 668.0
 
 [node name="Player" parent="." instance=ExtResource("1_63fvg")]
 position = Vector2(572, 607)
+
+[node name="BallHoldingNode" type="Node2D" parent="Player"]
+position = Vector2(0, -50)
+
+[node name="Ball" parent="Player/BallHoldingNode" instance=ExtResource("3_75ac5")]
