@@ -2,6 +2,8 @@ extends CharacterBody2D
 class_name Ball
 
 const speed: float = 400.0
+const paddle_collision_layer: int = 1
+const wall_collision_layer: int = 2
 
 func start() -> void:
 	velocity = Vector2.UP * speed
@@ -15,13 +17,18 @@ func _physics_process(delta: float) -> void:
 		resolve_collision(collision)
 
 func resolve_collision(collision: KinematicCollision2D) -> void:
-	var collider_layer : int = collision.get_collider().collision_layer
-	if collider_layer & 2:
-		resolve_collision_with_walls(collision)
-	elif collider_layer & 1:
+	var collider : Node = collision.get_collider()
+	var collider_layer : int = collider.collision_layer
+
+	if collider_layer & paddle_collision_layer:
 		resolve_collision_with_paddle(collision)
+
+	elif collider_layer & wall_collision_layer:
+		resolve_collision_with_walls(collision)
+		
 	else:
-		print("Collided with layer: ", collider_layer)
+		print("Unhandled Collision in layer: ", collider_layer)
+		print("  With node:", collider.get_name())
 
 func resolve_collision_with_walls(collision: KinematicCollision2D) -> void:
 	velocity = velocity.bounce(collision.get_normal())
