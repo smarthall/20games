@@ -23,6 +23,8 @@ var high_score := 0
 var score := 0
 var gameover := false
 
+## Called when the node is added to the scene. Initializes biomes, connects signals,
+## loads high score, and starts the game.
 func _ready() -> void:
 	randomize()
 
@@ -41,6 +43,10 @@ func _ready() -> void:
 	load_high_score()
 	start_game()
 
+## Handles player input for flapping, restarting, and quitting the game.
+## - Flap: Makes the player jump if not game over.
+## - Restart: Restarts the game if game over.
+## - ui_cancel: Quits the game.
 func _input(event):
 	if event.is_action_pressed("Flap") and not gameover:
 		player.flap()
@@ -51,6 +57,11 @@ func _input(event):
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
+## Moves biome instances to the left each frame, recycles them when off-screen,
+## and manages biome repositioning. Skips processing if game is over.
+##
+## Params:
+## - delta (float): Frame time step.
 func _physics_process(delta: float) -> void:
 	if gameover:
 		return
@@ -74,14 +85,17 @@ func _physics_process(delta: float) -> void:
 
 		biome_instances.append(instance)
 
-# Player went too far off the top of the screen
+## Called when the player collides with the 'too high' area (top of screen).
+## Ends the game.
 func _on_too_high_body_entered(_body: Node2D) -> void:
 	end_game()
 
-# Player hit an obstacle
+## Called when the player hits an obstacle. Ends the game.
 func _on_player_hit_obstacle() -> void:
 	end_game()
 
+## Resets all game state and positions to start a new run. Repositions biomes,
+## resets player, hides game over label, and zeroes score.
 func start_game() -> void:
 	var add_at_x := 0.0
 
@@ -98,6 +112,8 @@ func start_game() -> void:
 	zero_score()
 	gameover = false
 
+## Increments the player's score by 1 and updates the score label.
+## Does nothing if the game is over.
 func increment_score() -> void:
 	if gameover:
 		return
@@ -106,10 +122,12 @@ func increment_score() -> void:
 
 	score_label.text = str(score)
 
+## Resets the score to zero and updates the score label.
 func zero_score() -> void:
 	score = 0
 	score_label.text = str(score)
 
+## Loads the high score from disk if it exists, prints it, and updates the display.
 func load_high_score() -> void:
 	if FileAccess.file_exists("user://high_score.save"):
 		var save_file := FileAccess.open("user://high_score.save", FileAccess.READ)
@@ -119,14 +137,18 @@ func load_high_score() -> void:
 
 	display_high_score()
 
+## Saves the current high score to disk.
 func save_high_score() -> void:
 	var save_file := FileAccess.open("user://high_score.save", FileAccess.WRITE)
 	save_file.store_var(high_score)
 	save_file.close()
 
+## Updates the high score label with the current high score value.
 func display_high_score() -> void:
 	high_score_label.text = "High Score: " + str(high_score)
 
+## Ends the game: sets gameover, stops the player, shows game over label,
+## and updates/saves high score if a new record is set.
 func end_game() -> void:
 	gameover = true
 	player.stop()
