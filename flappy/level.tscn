@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuj1umrqtbcuy"]
+[gd_scene load_steps=11 format=3 uid="uid://cuj1umrqtbcuy"]
 
 [ext_resource type="Script" uid="uid://sgkyms3va5t3" path="res://level.gd" id="1_oi3di"]
 [ext_resource type="PackedScene" uid="uid://4ytsvi0hh5ls" path="res://player.tscn" id="2_vonw3"]
@@ -6,8 +6,26 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oi3di"]
 size = Vector2(1152, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
+size = Vector2(20, 748)
+
+[sub_resource type="SystemFont" id="SystemFont_vonw3"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_oi3di"]
+font = SubResource("SystemFont_vonw3")
 font_size = 48
+
+[sub_resource type="SystemFont" id="SystemFont_oi3di"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0b4ue"]
+font = SubResource("SystemFont_oi3di")
+font_size = 72
+
+[sub_resource type="SystemFont" id="SystemFont_f2txt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ainy"]
+font = SubResource("SystemFont_f2txt")
+font_size = 28
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_oi3di")
@@ -17,34 +35,69 @@ position = Vector2(152, 158)
 
 [node name="BiomeScenes" type="Node2D" parent="."]
 
-[node name="TooHigh" type="Area2D" parent="."]
-position = Vector2(576, -95)
+[node name="OutOfBounds" type="Area2D" parent="."]
 collision_layer = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TooHigh"]
+[node name="TooHigh" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2(576, -95)
 shape = SubResource("RectangleShape2D_oi3di")
+
+[node name="Backwards" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2(-10, 274)
+shape = SubResource("RectangleShape2D_vonw3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 23.0
-grow_horizontal = 2
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control/HBoxContainer"]
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 67.0
 size_flags_horizontal = 3
 text = "0"
 label_settings = SubResource("LabelSettings_oi3di")
 horizontal_alignment = 1
 
+[node name="GameOverLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -11.5
+offset_right = 0.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_0b4ue")
+horizontal_alignment = 1
+
+[node name="RestartText" type="Label" parent="CanvasLayer/Control/GameOverLabel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -19.0
+offset_right = 160.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press [ENTER] to restart"
+label_settings = SubResource("LabelSettings_1ainy")
+horizontal_alignment = 1
+
 [connection signal="hit_obstacle" from="Player" to="." method="_on_player_hit_obstacle"]
-[connection signal="body_entered" from="TooHigh" to="." method="_on_too_high_body_entered"]
+[connection signal="body_entered" from="OutOfBounds" to="." method="_on_too_high_body_entered"]

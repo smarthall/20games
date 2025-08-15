@@ -12,7 +12,10 @@ const BIOMES := [
 
 @onready var biome_scenes := $BiomeScenes
 @onready var player: Player = $Player
-@onready var score_label: Label = $CanvasLayer/Control/HBoxContainer/ScoreLabel
+@onready var score_label: Label = $CanvasLayer/Control/ScoreLabel
+@onready var game_over_label: Label = $CanvasLayer/Control/GameOverLabel
+
+@onready var initial_player_pos: Vector2 = $Player.position
 
 var biome_instances: Array = []
 var score := 0
@@ -39,6 +42,9 @@ func _input(event):
 	if event.is_action_pressed("Flap") and not gameover:
 		player.flap()
 
+	elif event.is_action_pressed("Restart") and gameover:
+		start_game()
+
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
@@ -60,7 +66,7 @@ func _physics_process(delta: float) -> void:
 		instance.set_obstacle_positions()
 		instance.set_biome(BIOMES[randi() % BIOMES.size()])
 
-		var last_biome :Node = biome_instances[biome_instances.size() - 1]
+		var last_biome: Node = biome_instances[biome_instances.size() - 1]
 		instance.position.x = last_biome.position.x + last_biome.width
 
 		biome_instances.append(instance)
@@ -77,17 +83,31 @@ func start_game() -> void:
 	var add_at_x := 0.0
 
 	for i in range(3):
-		var instance :Node2D = biome_instances[i]
+		var instance: Node2D = biome_instances[i]
 		instance.position.x = add_at_x
 		add_at_x += instance.width
 
+	player.reset_to(initial_player_pos)
 	player.start()
 
+	game_over_label.hide()
+
+	zero_score()
+	gameover = false
+
 func increment_score() -> void:
+	if gameover:
+		return
+
 	score += 1
 
+	score_label.text = str(score)
+
+func zero_score() -> void:
+	score = 0
 	score_label.text = str(score)
 
 func end_game() -> void:
 	gameover = true
 	player.stop()
+	game_over_label.show()
