@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6rpcu815yae4"]
+
+[ext_resource type="Texture2D" uid="uid://cm5flrom0g6gm" path="res://Resources/Paddle.png" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://d22pish2yqb5k" path="res://player.gd" id="1_onrkg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
+radius = 38.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
+size = Vector2(230, 25)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_onrkg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4flbx")
+
+[node name="PaddleTop" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+scale = Vector2(3, 0.85)
+shape = SubResource("CircleShape2D_onrkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 22.5)
+shape = SubResource("RectangleShape2D_i3pqv")

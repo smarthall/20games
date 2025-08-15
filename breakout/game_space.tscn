@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbk25xfktogup"]
+
+[ext_resource type="PackedScene" uid="uid://c6rpcu815yae4" path="res://player.tscn" id="1_63fvg"]
+[ext_resource type="Script" uid="uid://uu45niv78pa0" path="res://game_space.gd" id="1_ihldm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n10u8"]
+size = Vector2(1172, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_63fvg"]
+size = Vector2(20, 668)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihldm"]
+size = Vector2(20, 668)
+
+[node name="GameSpace" type="Node2D"]
+script = ExtResource("1_ihldm")
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+
+[node name="TopCollisionShape" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(576, 0)
+shape = SubResource("RectangleShape2D_n10u8")
+
+[node name="TopColorRect" type="ColorRect" parent="Boundaries"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 1162.0
+offset_bottom = 10.0
+
+[node name="LeftCollisionShape" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(0, 334)
+shape = SubResource("RectangleShape2D_63fvg")
+
+[node name="LeftColorRect" type="ColorRect" parent="Boundaries"]
+offset_left = -10.0
+offset_top = 10.0
+offset_right = 10.0
+offset_bottom = 668.0
+
+[node name="RightCollisionShape" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(1152, 334)
+shape = SubResource("RectangleShape2D_ihldm")
+
+[node name="RightColorRect" type="ColorRect" parent="Boundaries"]
+offset_left = 1142.0
+offset_top = 10.0
+offset_right = 1162.0
+offset_bottom = 668.0
+
+[node name="Player" parent="." instance=ExtResource("1_63fvg")]
+position = Vector2(572, 607)
