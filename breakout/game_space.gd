@@ -5,6 +5,7 @@ extends Node2D
 @onready var ball_holding_node : Node2D = $Player/BallHoldingNode
 @onready var player: Player = $Player
 @onready var ui : CanvasLayer = $UI
+@onready var bricks: Node2D = $Bricks
 
 @onready var lives : int = 0: set = update_lives_display
 @onready var score : int = 0: set = update_score_display

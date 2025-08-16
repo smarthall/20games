@@ -15,7 +15,7 @@ offset_left = -30.0
 offset_top = -10.0
 offset_right = 30.0
 offset_bottom = 10.0
-color = Color(1, 0.784314, 0.341176, 1)
+color = Color(0.145098, 0.372549, 0.521569, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

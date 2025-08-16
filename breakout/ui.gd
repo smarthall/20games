@@ -52,7 +52,9 @@ func _get_score() -> int:
 
 func _set_game_over(value: bool) -> void:
 	game_over = value
-	game_over_container.visible = value
+
+	if game_over_container:
+		game_over_container.visible = value
 
 func _get_game_over() -> bool:
 	return game_over

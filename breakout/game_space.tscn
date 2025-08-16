@@ -83,7 +83,7 @@ script = ExtResource("3_xq8gv")
 spawn_count = Vector2i(15, 10)
 
 [node name="UI" parent="." instance=ExtResource("5_wky0x")]
-score = 0
+game_over = false
 
 [node name="BallKiller" type="Area2D" parent="."]
 collision_layer = 16
