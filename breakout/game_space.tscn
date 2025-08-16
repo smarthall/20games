@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bbk25xfktogup"]
+[gd_scene load_steps=9 format=3 uid="uid://drw2wgrcktggh"]
 
 [ext_resource type="PackedScene" uid="uid://c6rpcu815yae4" path="res://player.tscn" id="1_63fvg"]
 [ext_resource type="Script" uid="uid://uu45niv78pa0" path="res://game_space.gd" id="1_ihldm"]
-[ext_resource type="PackedScene" uid="uid://bsboa856u3ioq" path="res://brick.tscn" id="4_xq8gv"]
+[ext_resource type="Script" uid="uid://c5xdmy6smvcfm" path="res://spawn_brick_wall.gd" id="3_xq8gv"]
 [ext_resource type="PackedScene" uid="uid://dqyi0la612cb7" path="res://ui.tscn" id="5_wky0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n10u8"]
@@ -62,11 +62,14 @@ position = Vector2(0, -50)
 
 [node name="Bricks" type="Node2D" parent="."]
 
-[node name="Brick" parent="Bricks" instance=ExtResource("4_xq8gv")]
-position = Vector2(526, 149)
-
-[node name="Brick2" parent="Bricks" instance=ExtResource("4_xq8gv")]
-position = Vector2(622, 149)
+[node name="SpawnArea" type="ColorRect" parent="Bricks"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 1122.0
+offset_bottom = 430.0
+color = Color(0.278431, 0.298039, 1, 0.231373)
+script = ExtResource("3_xq8gv")
+spawn_count = Vector2i(15, 10)
 
 [node name="UI" parent="." instance=ExtResource("5_wky0x")]
 

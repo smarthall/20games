@@ -53,6 +53,7 @@ func launch_ball() -> void:
 
 	held_ball.reparent(self)
 	held_ball.start()
+	held_ball = null
 
 func gameover() -> void:
 	get_tree().quit()
