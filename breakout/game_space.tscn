@@ -19,7 +19,6 @@ size = Vector2(1152, 20)
 
 [node name="GameSpace" type="Node2D"]
 script = ExtResource("1_ihldm")
-initial_lives = 2
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
 collision_layer = 2
