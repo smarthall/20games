@@ -1,11 +1,16 @@
 extends CharacterBody2D
+class_name Player
 
 @export var speed: float = 400.0
 @export var paddle_margin: float = 10.0
+@export var active: bool = true
 
 @onready var collision_shape: CollisionShape2D = $Collision
 
 func _physics_process(delta: float) -> void:
+    if not active:
+        return
+
     var screen_size = get_viewport_rect().size
     var paddle_size = collision_shape.get_shape().get_rect().size
 

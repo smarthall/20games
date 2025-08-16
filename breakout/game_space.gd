@@ -3,14 +3,17 @@ extends Node2D
 @export var initial_lives :int = 3
 
 @onready var ball_holding_node : Node2D = $Player/BallHoldingNode
+@onready var player: Player = $Player
 @onready var ui : CanvasLayer = $UI
 
 @onready var lives : int = 0: set = update_lives_display
 @onready var score : int = 0: set = update_score_display
 
-const ball_scene : PackedScene = preload("res://ball.tscn")
+const ball_scene := preload("res://ball.tscn")
+const menu_scene := "res://main_menu.tscn"
 
 var held_ball: Ball = null
+var game_ended: bool = false
 
 func _ready() -> void:
 	lives = initial_lives
@@ -21,7 +24,7 @@ func _input(event: InputEvent) -> void:
 		launch_ball()
 
 	elif event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
+		get_tree().change_scene_to_packed(load(menu_scene))
 
 func _on_ball_killer_body_entered(body: Node2D) -> void:
 	if body is Ball:
@@ -52,11 +55,12 @@ func new_ball() -> void:
 
 func replace_ball(ball: Ball) -> void:
 	ball.queue_free()
-	new_ball()
+
+	if not game_ended:
+		new_ball()
 
 func launch_ball() -> void:
-	if not held_ball:
-		push_error("No held_ball instance to launch!")
+	if not held_ball or game_ended:
 		return
 
 	held_ball.reparent(self)
@@ -64,4 +68,6 @@ func launch_ball() -> void:
 	held_ball = null
 
 func gameover() -> void:
-	get_tree().quit()
+	game_ended = true
+	player.active = false
+	ui.game_over = true
