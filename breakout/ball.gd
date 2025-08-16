@@ -45,4 +45,4 @@ func resolve_collision_with_brick(collision: KinematicCollision2D) -> void:
 	var brick : Node2D = collision.get_collider() as Node2D
 	velocity = velocity.bounce(collision.get_normal())
 
-	brick.queue_free()
+	brick.hit(self)

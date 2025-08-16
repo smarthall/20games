@@ -56,6 +56,7 @@ offset_bottom = 668.0
 
 [node name="Player" parent="." instance=ExtResource("1_63fvg")]
 position = Vector2(572, 607)
+speed = 500.0
 
 [node name="BallHoldingNode" type="Node2D" parent="Player"]
 position = Vector2(0, -50)
@@ -72,6 +73,7 @@ script = ExtResource("3_xq8gv")
 spawn_count = Vector2i(15, 10)
 
 [node name="UI" parent="." instance=ExtResource("5_wky0x")]
+score = 0
 
 [node name="BallKiller" type="Area2D" parent="."]
 collision_layer = 16

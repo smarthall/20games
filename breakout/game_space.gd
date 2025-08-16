@@ -6,6 +6,7 @@ extends Node2D
 @onready var ui : CanvasLayer = $UI
 
 @onready var lives : int = 0: set = update_lives_display
+@onready var score : int = 0: set = update_score_display
 
 const ball_scene : PackedScene = preload("res://ball.tscn")
 
@@ -29,6 +30,13 @@ func _on_ball_killer_body_entered(body: Node2D) -> void:
 func update_lives_display(value: int) -> void:
 	lives = value
 	ui.hearts = value
+
+func update_score_display(value: int) -> void:
+	score = value
+	ui.score = value
+
+func handle_brick_destroyed(_ball: Ball) -> void:
+	update_score_display(score + 1)
 
 func handle_ball_loss(ball: Ball) -> void:
 	lives -= 1

@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqyi0la612cb7"]
+[gd_scene load_steps=4 format=3 uid="uid://dqyi0la612cb7"]
 
 [ext_resource type="Script" uid="uid://chby60n8rlv1s" path="res://ui.gd" id="1_fyqef"]
 [ext_resource type="Texture2D" uid="uid://drikmj7lppayo" path="res://Resources/hud_heart.svg" id="2_m6e0p"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_m6e0p"]
+font_size = 48
+
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_fyqef")
+score = null
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -24,6 +28,7 @@ offset_top = -64.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_left = 25
+theme_override_constants/margin_right = 25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
 layout_mode = 2
@@ -39,3 +44,10 @@ texture = ExtResource("2_m6e0p")
 [node name="HeartThree" type="TextureRect" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_m6e0p")
+
+[node name="ScoreLabel" type="Label" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_m6e0p")
+horizontal_alignment = 2
