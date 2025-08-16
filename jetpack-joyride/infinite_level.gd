@@ -1,5 +1,7 @@
 extends Node2D
 
+# TODO Refactor onto the background Node2D
+
 @onready var background: Node2D = $Background
 @onready var tilemap_a: TileMapLayer = $Background/TileMapA
 @onready var tilemap_b: TileMapLayer = $Background/TileMapB
