@@ -5,6 +5,7 @@ extends CanvasLayer
 @export var hearts: int = 3: set = _set_health, get = _get_health
 @export var score: int = 0: set = _set_score, get = _get_score
 @export var game_over: bool = false: set = _set_game_over, get = _get_game_over
+@export var won: bool = false: set = _set_won, get = _get_won
 
 const heart_full_texture = preload("res://Resources/hud_heart.svg")
 const heart_empty_texture = preload("res://Resources/hud_heart_empty.svg")
@@ -17,6 +18,7 @@ const menu_scene := "res://main_menu.tscn"
 @onready var score_label = $Control/MarginContainer/HBoxContainer/ScoreLabel
 
 @onready var game_over_container: CenterContainer = $Control/GameOver
+@onready var won_container: CenterContainer = $Control/GameWon
 
 func _set_health(value: int) -> void:
 	hearts = clamp(value, 0, 3)
@@ -58,6 +60,15 @@ func _set_game_over(value: bool) -> void:
 
 func _get_game_over() -> bool:
 	return game_over
+
+func _set_won(value: bool) -> void:
+	won = value
+
+	if won_container:
+		won_container.visible = value
+
+func _get_won() -> bool:
+	return won
 
 func _on_main_menu_button_pressed() -> void:
 	get_tree().change_scene_to_packed(load(menu_scene))

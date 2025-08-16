@@ -84,6 +84,7 @@ spawn_count = Vector2i(15, 10)
 
 [node name="UI" parent="." instance=ExtResource("5_wky0x")]
 game_over = false
+won = null
 
 [node name="BallKiller" type="Area2D" parent="."]
 collision_layer = 16

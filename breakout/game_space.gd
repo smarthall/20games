@@ -42,10 +42,14 @@ func update_score_display(value: int) -> void:
 func handle_brick_destroyed(_ball: Ball) -> void:
 	update_score_display(score + 1)
 
+	# If the last brick was destroyed
+	if bricks.get_child_count() == 1:
+		gameover(true)
+
 func handle_ball_loss(ball: Ball) -> void:
 	lives -= 1
 	if lives <= 0:
-		gameover()
+		gameover(false)
 
 	else:
 		replace_ball(ball)
@@ -68,7 +72,9 @@ func launch_ball() -> void:
 	held_ball.start()
 	held_ball = null
 
-func gameover() -> void:
+func gameover(won: bool) -> void:
 	game_ended = true
 	player.active = false
-	ui.game_over = true
+	
+	ui.game_over = not won
+	ui.won = won
