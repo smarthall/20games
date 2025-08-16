@@ -7,7 +7,7 @@ const wall_collision_layer: int = 2
 const brick_collision_layer: int = 8
 
 func start() -> void:
-	velocity = Vector2.UP * speed
+	velocity = Vector2.UP.rotated(deg_to_rad(0.1)) * speed
 
 func stop() -> void:
 	velocity = Vector2.ZERO
