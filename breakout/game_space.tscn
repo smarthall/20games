@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbk25xfktogup"]
+[gd_scene load_steps=9 format=3 uid="uid://bbk25xfktogup"]
 
 [ext_resource type="PackedScene" uid="uid://c6rpcu815yae4" path="res://player.tscn" id="1_63fvg"]
 [ext_resource type="Script" uid="uid://uu45niv78pa0" path="res://game_space.gd" id="1_ihldm"]
-[ext_resource type="PackedScene" uid="uid://jgfp28ghomnu" path="res://ball.tscn" id="3_75ac5"]
 [ext_resource type="PackedScene" uid="uid://bsboa856u3ioq" path="res://brick.tscn" id="4_xq8gv"]
+[ext_resource type="PackedScene" uid="uid://dqyi0la612cb7" path="res://ui.tscn" id="5_wky0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n10u8"]
 size = Vector2(1172, 20)
@@ -14,8 +14,12 @@ size = Vector2(20, 668)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ihldm"]
 size = Vector2(20, 668)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wky0x"]
+size = Vector2(1152, 20)
+
 [node name="GameSpace" type="Node2D"]
 script = ExtResource("1_ihldm")
+initial_lives = 2
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
 collision_layer = 2
@@ -57,8 +61,6 @@ position = Vector2(572, 607)
 [node name="BallHoldingNode" type="Node2D" parent="Player"]
 position = Vector2(0, -50)
 
-[node name="Ball" parent="Player/BallHoldingNode" instance=ExtResource("3_75ac5")]
-
 [node name="Bricks" type="Node2D" parent="."]
 
 [node name="Brick" parent="Bricks" instance=ExtResource("4_xq8gv")]
@@ -66,3 +68,15 @@ position = Vector2(526, 149)
 
 [node name="Brick2" parent="Bricks" instance=ExtResource("4_xq8gv")]
 position = Vector2(622, 149)
+
+[node name="UI" parent="." instance=ExtResource("5_wky0x")]
+
+[node name="BallKiller" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallKiller"]
+position = Vector2(576, 658)
+shape = SubResource("RectangleShape2D_wky0x")
+
+[connection signal="body_entered" from="BallKiller" to="." method="_on_ball_killer_body_entered"]
