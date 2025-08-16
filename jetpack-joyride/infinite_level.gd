@@ -8,8 +8,21 @@ var tilemap_a_leader := true
 
 const BACKGROUND_SCROLL_SPEED = 1000.0
 
+const TILE_BLANK = Vector2i(2, 0)
+const TILE_CACTUS = Vector2i(2, 1)
+const TILE_TREES = Vector2i(3, 1)
+const TILE_MUSHROOM = Vector2i(1, 3)
+const BACKTILES : Dictionary[int, Vector2i] = {
+	50: TILE_BLANK,
+	75: TILE_CACTUS,
+	98: TILE_TREES,
+	99: TILE_MUSHROOM,
+}
+
 func _ready() -> void:
 	position_background_tilemaps()
+	randomize_timemap(get_leading_tilemap())
+	randomize_timemap(get_following_tilemap())
 
 func _process(delta: float) -> void:
 	background.position.x -= BACKGROUND_SCROLL_SPEED * delta
@@ -17,11 +30,13 @@ func _process(delta: float) -> void:
 	if background.position.x <= -1 * get_leading_tilemap_size().x * background.scale.x:
 		background.position.x = 0
 		swap_background_tilemaps()
-		randomize_following_tilemap()
+		randomize_timemap(get_following_tilemap())
 
-func randomize_following_tilemap() -> void:
-	# TODO Randomise the background layer for the following tileset
-	pass
+func randomize_timemap(tm : TileMapLayer) -> void:
+	for x in range(tm.get_used_rect().size.x):
+		var tile_position := Vector2i(x, 1)
+		var random_tile := get_random_background_tile()
+		tm.set_cell(tile_position, 1, random_tile)
 
 func swap_background_tilemaps() -> void:
 	tilemap_a_leader = not tilemap_a_leader
@@ -33,6 +48,15 @@ func position_background_tilemaps() -> void:
 
 	leading_tilemap.position.x = 0
 	following_tilemap.position.x = get_leading_tilemap_size().x
+
+func get_random_background_tile() -> Vector2i:
+	var rand := randi_range(0, 100)
+
+	for weight in BACKTILES.keys():
+		if rand < weight:
+			return BACKTILES[weight]
+
+	return BACKTILES[BACKTILES.keys()[0]]
 
 func get_leading_tilemap() -> TileMapLayer:
 	return tilemap_a if tilemap_a_leader else tilemap_b
