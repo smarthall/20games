@@ -22,13 +22,29 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
+func _on_ball_killer_body_entered(body: Node2D) -> void:
+	if body is Ball:
+		handle_ball_loss(body)
+
 func update_lives_display(value: int) -> void:
 	lives = value
 	ui.hearts = value
 
+func handle_ball_loss(ball: Ball) -> void:
+	lives -= 1
+	if lives <= 0:
+		gameover()
+
+	else:
+		replace_ball(ball)
+
 func new_ball() -> void:
 	held_ball = ball_scene.instantiate()
 	ball_holding_node.add_child.call_deferred(held_ball)
+
+func replace_ball(ball: Ball) -> void:
+	ball.queue_free()
+	new_ball()
 
 func launch_ball() -> void:
 	if not held_ball:
@@ -38,12 +54,5 @@ func launch_ball() -> void:
 	held_ball.reparent(self)
 	held_ball.start()
 
-func _on_ball_killer_body_entered(body: Node2D) -> void:
-	if body is Ball:
-		lives -= 1
-		if lives <= 0:
-			get_tree().quit()
-
-		else:
-			body.queue_free()
-			new_ball()
+func gameover() -> void:
+	get_tree().quit()
