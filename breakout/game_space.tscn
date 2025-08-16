@@ -20,6 +20,13 @@ size = Vector2(1152, 20)
 [node name="GameSpace" type="Node2D"]
 script = ExtResource("1_ihldm")
 
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.282353, 0.113725, 0.141176, 1)
+
 [node name="Boundaries" type="StaticBody2D" parent="."]
 collision_layer = 2
 collision_mask = 0
@@ -33,6 +40,7 @@ offset_left = -10.0
 offset_top = -10.0
 offset_right = 1162.0
 offset_bottom = 10.0
+color = Color(0.145098, 0.372549, 0.521569, 1)
 
 [node name="LeftCollisionShape" type="CollisionShape2D" parent="Boundaries"]
 position = Vector2(0, 334)
@@ -43,6 +51,7 @@ offset_left = -10.0
 offset_top = 10.0
 offset_right = 10.0
 offset_bottom = 668.0
+color = Color(0.145098, 0.372549, 0.521569, 1)
 
 [node name="RightCollisionShape" type="CollisionShape2D" parent="Boundaries"]
 position = Vector2(1152, 334)
@@ -53,13 +62,14 @@ offset_left = 1142.0
 offset_top = 10.0
 offset_right = 1162.0
 offset_bottom = 668.0
+color = Color(0.145098, 0.372549, 0.521569, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_63fvg")]
 position = Vector2(572, 607)
 speed = 500.0
 
 [node name="BallHoldingNode" type="Node2D" parent="Player"]
-position = Vector2(0, -50)
+position = Vector2(0, -30)
 
 [node name="Bricks" type="Node2D" parent="."]
 
