@@ -6,6 +6,7 @@ extends Node2D
 @onready var player: Player = $Player
 @onready var ui : CanvasLayer = $UI
 @onready var bricks: Node2D = $Bricks
+@onready var ball_lost_sound: AudioStreamPlayer = $BallLostSound
 
 @onready var lives : int = 0: set = update_lives_display
 @onready var score : int = 0: set = update_score_display
@@ -47,6 +48,8 @@ func handle_brick_destroyed(_ball: Ball) -> void:
 		gameover(true)
 
 func handle_ball_loss(ball: Ball) -> void:
+	ball_lost_sound.play()
+	
 	lives -= 1
 	if lives <= 0:
 		gameover(false)

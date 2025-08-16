@@ -38,11 +38,13 @@ func resolve_collision_with_walls(collision: KinematicCollision2D) -> void:
 	velocity = velocity.bounce(collision.get_normal())
 
 func resolve_collision_with_paddle(collision: KinematicCollision2D) -> void:
-	var paddle : Node2D = collision.get_collider() as Node2D
+	var paddle : Player = collision.get_collider() as Player
 	velocity = paddle.global_position.direction_to(global_position).normalized() * speed
 
+	paddle.hit()
+
 func resolve_collision_with_brick(collision: KinematicCollision2D) -> void:
-	var brick : Node2D = collision.get_collider() as Node2D
+	var brick : Brick = collision.get_collider().get_parent() as Brick
 	velocity = velocity.bounce(collision.get_normal())
 
 	brick.hit(self)

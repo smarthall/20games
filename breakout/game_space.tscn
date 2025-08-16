@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://drw2wgrcktggh"]
+[gd_scene load_steps=10 format=3 uid="uid://drw2wgrcktggh"]
 
 [ext_resource type="PackedScene" uid="uid://c6rpcu815yae4" path="res://player.tscn" id="1_63fvg"]
 [ext_resource type="Script" uid="uid://uu45niv78pa0" path="res://game_space.gd" id="1_ihldm"]
 [ext_resource type="Script" uid="uid://c5xdmy6smvcfm" path="res://spawn_brick_wall.gd" id="3_xq8gv"]
+[ext_resource type="AudioStream" uid="uid://b48py1llsxmim" path="res://Resources/ball_lost.ogg" id="5_syrn0"]
 [ext_resource type="PackedScene" uid="uid://dqyi0la612cb7" path="res://ui.tscn" id="5_wky0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n10u8"]
@@ -84,7 +85,7 @@ spawn_count = Vector2i(15, 10)
 
 [node name="UI" parent="." instance=ExtResource("5_wky0x")]
 game_over = false
-won = null
+won = false
 
 [node name="BallKiller" type="Area2D" parent="."]
 collision_layer = 16
@@ -93,5 +94,8 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallKiller"]
 position = Vector2(576, 658)
 shape = SubResource("RectangleShape2D_wky0x")
+
+[node name="BallLostSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_syrn0")
 
 [connection signal="body_entered" from="BallKiller" to="." method="_on_ball_killer_body_entered"]

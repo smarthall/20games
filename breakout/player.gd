@@ -23,3 +23,6 @@ func _physics_process(delta: float) -> void:
         position.x += speed * delta
 
     position.x = clamp(position.x, paddle_min_x, paddle_max_x)
+
+func hit() -> void:
+    $AudioStreamPlayer2D.play()
