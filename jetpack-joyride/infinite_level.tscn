@@ -90,3 +90,4 @@ shape = SubResource("RectangleShape2D_fqwvg")
 
 [connection signal="tilemap_recycle" from="Background" to="." method="_on_background_tilemap_recycle"]
 [connection signal="hazard_collision" from="Player" to="." method="_on_player_hazard_collision"]
+[connection signal="pickup_collision" from="Player" to="." method="_on_player_pickup_collision"]

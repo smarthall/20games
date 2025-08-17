@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 signal hazard_collision
+signal pickup_collision(body: TileMapLayer, coords: Vector2i)
 
 @onready var exhaust: CPUParticles2D = $Exhaust
 @onready var sprite: AnimatedSprite2D = $Sprite
@@ -58,6 +59,7 @@ func handle_hazard_collision(_collision: KinematicCollision2D) -> void:
 	hazard_collision.emit()
 
 func handle_pickup_collision(collision_point: Vector2, body: TileMapLayer) -> void:
-	# TODO Get the map tile collided with
-	# TODO Fire a signal with the body, and the tile
-	pass
+	var local_collision_point := body.to_local(collision_point)
+	var map_collision_point := body.local_to_map(local_collision_point)
+
+	pickup_collision.emit(body, map_collision_point)

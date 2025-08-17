@@ -1,7 +1,5 @@
 extends Node2D
 
-# TODO Refactor onto the background Node2D
-
 @onready var background: ScrollingTilemap = $Background
 
 const TILE_BLANK = Vector2i(2, 0)
@@ -36,3 +34,8 @@ func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 
 func _on_player_hazard_collision() -> void:
 	pass # Replace with function body.
+
+func _on_player_pickup_collision(body:TileMapLayer, coords:Vector2i):
+	print("Player picked up item from ", body, " at ", coords)
+
+	body.erase_cell(coords)
