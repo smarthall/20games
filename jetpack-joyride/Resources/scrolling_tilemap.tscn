@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgn4vktmne15a"]
+
+[ext_resource type="Script" uid="uid://bywpilykl0utb" path="res://scrolling_tilemap.gd" id="1_1rt0m"]
+
+[node name="ScrollingTilemap" type="Node2D"]
+script = ExtResource("1_1rt0m")
+metadata/_custom_type_script = "uid://bywpilykl0utb"
