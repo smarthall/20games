@@ -33,3 +33,6 @@ func get_random_background_tile() -> Vector2i:
 
 func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 	randomize_background_timemap(tilemap)
+
+func _on_player_hazard_collision() -> void:
+	pass # Replace with function body.

@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+signal hazard_collision
+
 @onready var exhaust: CPUParticles2D = $Exhaust
 @onready var sprite: AnimatedSprite2D = $Sprite
 
@@ -29,6 +31,7 @@ func _physics_process(delta: float) -> void:
 
 	velocity.y = clamp(velocity.y, -TERMINAL_VELOCITY, TERMINAL_VELOCITY)
 
+	# Bounce back to X = 250
 	var x_distance_offset = position.x - X_LOCATION
 	if abs(x_distance_offset) > X_LOCATION_DEAD_ZONE:
 		if x_distance_offset > 0:
@@ -39,3 +42,19 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 
 	move_and_slide()
+
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+
+		if collider.is_in_group("Hazards"):
+			handle_hazard_collision(collision)
+
+func handle_hazard_collision(_collision: KinematicCollision2D) -> void:
+	hazard_collision.emit()
+
+func handle_pickup_collision(collision: KinematicCollision2D) -> void:
+	print("Player collided with pickup: ", collision.get_collider().name)
+
+func _on_collector_body_entered(body: Node2D) -> void:
+	print("Player entered collector: ", body.name)
