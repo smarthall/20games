@@ -15,7 +15,7 @@ const BACKTILES : Dictionary[int, Vector2i] = {
 	99: TILE_MUSHROOM,
 }
 
-func randomize_timemap(tm : TileMapLayer) -> void:
+func randomize_background_timemap(tm : TileMapLayer) -> void:
 	for x in range(tm.get_used_rect().size.x):
 		var tile_position := Vector2i(x, 1)
 		var random_tile := get_random_background_tile()
@@ -32,4 +32,4 @@ func get_random_background_tile() -> Vector2i:
 
 
 func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
-	randomize_timemap(tilemap)
+	randomize_background_timemap(tilemap)

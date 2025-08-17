@@ -24,6 +24,7 @@ func _physics_process(delta: float) -> void:
 	var leading_tile_size := tilemap_pixel_size(LEADING_MAP_INDEX).x * scale.x
 	if position.x <= -leading_tile_size:
 		position.x += leading_tile_size
+		swap_tilemap()
 
 func swap_tilemap() -> void:
 	var leading_tilemap := maps[LEADING_MAP_INDEX]
