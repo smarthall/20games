@@ -32,6 +32,7 @@ jetpack={
 2d_physics/layer_1="Terrain"
 2d_physics/layer_2="Hazard"
 2d_physics/layer_3="Player"
+2d_physics/layer_4="Pickups"
 
 [rendering]
 

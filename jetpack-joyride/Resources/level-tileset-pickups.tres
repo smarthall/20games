@@ -1,0 +1,21 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://duy4dpbojd3yg"]
+
+[ext_resource type="Texture2D" uid="uid://dawy7pcj1sreq" path="res://Resources/level/level-tiles-merged-2.png" id="1_l3fgd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_20cvq"]
+texture = ExtResource("1_l3fgd")
+texture_region_size = Vector2i(64, 64)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.652, -9.03158, -0.282238, -20.8855, 16.0875, -10.1605, 16.652, 10.725, -0.282238, 20.8855, -16.652, 11.2895)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.652, -9.03158, -0.282238, -20.8855, 16.0875, -10.1605, 16.652, 10.725, -0.282238, 20.8855, -16.652, 11.2895)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.652, -9.03158, -0.282238, -20.8855, 16.0875, -10.1605, 16.652, 10.725, -0.282238, 20.8855, -16.652, 11.2895)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.0875, -13.5474, 15.523, -12.9829, 16.0875, 0, 0.84671, 14.6763, -16.652, -0.564476)
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_20cvq")
