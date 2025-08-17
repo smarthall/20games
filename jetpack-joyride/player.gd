@@ -5,6 +5,7 @@ signal hazard_collision
 
 @onready var exhaust: CPUParticles2D = $Exhaust
 @onready var sprite: AnimatedSprite2D = $Sprite
+@onready var collector: RayCast2D = $Collector
 
 const X_LOCATION := 250.0
 const X_LOCATION_DEAD_ZONE := 5.0
@@ -21,11 +22,6 @@ func _physics_process(delta: float) -> void:
 		exhaust.emitting = true
 	else:
 		exhaust.emitting = false
-
-	if is_on_floor():
-		sprite.play("default")
-	else:
-		sprite.play("jump")
 
 	velocity.y += GRAVITY * delta
 
@@ -50,11 +46,18 @@ func _physics_process(delta: float) -> void:
 		if collider.is_in_group("Hazards"):
 			handle_hazard_collision(collision)
 
+	if collector.is_colliding() && collector.get_collider() is TileMapLayer && collector.get_collider().is_in_group("Pickups"):
+		handle_pickup_collision(collector.get_collision_point(), collector.get_collider())
+
+	if is_on_floor():
+		sprite.play("default")
+	else:
+		sprite.play("jump")
+
 func handle_hazard_collision(_collision: KinematicCollision2D) -> void:
 	hazard_collision.emit()
 
-func handle_pickup_collision(collision: KinematicCollision2D) -> void:
-	print("Player collided with pickup: ", collision.get_collider().name)
-
-func _on_collector_body_entered(body: Node2D) -> void:
-	print("Player entered collector: ", body.name)
+func handle_pickup_collision(collision_point: Vector2, body: TileMapLayer) -> void:
+	# TODO Get the map tile collided with
+	# TODO Fire a signal with the body, and the tile
+	pass

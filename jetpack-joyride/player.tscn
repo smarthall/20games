@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3qa1pp5o3yvf"]
+[gd_scene load_steps=8 format=3 uid="uid://b3qa1pp5o3yvf"]
 
 [ext_resource type="Script" uid="uid://dln2s6livk11u" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://7rlcu24dilp7" path="res://Resources/player/jump.svg" id="2_i3pqv"]
@@ -32,10 +32,6 @@ animations = [{
 radius = 32.0
 height = 95.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sweqy"]
-radius = 32.0
-height = 95.0
-
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
@@ -62,11 +58,5 @@ sprite_frames = SubResource("SpriteFrames_i3pqv")
 position = Vector2(0, 12)
 shape = SubResource("CapsuleShape2D_fqwvg")
 
-[node name="Collector" type="Area2D" parent="."]
-position = Vector2(0, 12)
+[node name="Collector" type="RayCast2D" parent="."]
 collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collector"]
-shape = SubResource("CapsuleShape2D_sweqy")
-
-[connection signal="body_entered" from="Collector" to="." method="_on_collector_body_entered"]
