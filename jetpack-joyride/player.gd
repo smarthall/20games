@@ -6,7 +6,7 @@ signal pickup_collision(body: TileMapLayer, coords: Vector2i)
 
 @onready var exhaust: CPUParticles2D = $Exhaust
 @onready var sprite: AnimatedSprite2D = $Sprite
-@onready var collector: RayCast2D = $Collector
+@onready var collector: ShapeCast2D = $Collector
 
 const X_LOCATION := 250.0
 const X_LOCATION_DEAD_ZONE := 5.0
@@ -47,8 +47,10 @@ func _physics_process(delta: float) -> void:
 		if collider.is_in_group("Hazards"):
 			handle_hazard_collision(collision)
 
-	if collector.is_colliding() && collector.get_collider() is TileMapLayer && collector.get_collider().is_in_group("Pickups"):
-		handle_pickup_collision(collector.get_collision_point(), collector.get_collider())
+	if collector.is_colliding():
+		for i in collector.get_collision_count():
+			if collector.get_collider(i) is TileMapLayer:
+				handle_pickup_collision(collector.get_collision_point(i), collector.get_collider(i))
 
 	if is_on_floor():
 		sprite.play("default")
