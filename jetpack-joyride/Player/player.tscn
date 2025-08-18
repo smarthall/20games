@@ -1,10 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3qa1pp5o3yvf"]
+[gd_scene load_steps=11 format=3 uid="uid://b3qa1pp5o3yvf"]
 
-[ext_resource type="Script" uid="uid://dln2s6livk11u" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://dln2s6livk11u" path="res://Player/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://7rlcu24dilp7" path="res://Resources/player/jump.svg" id="2_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://v3dxxsg538i3" path="res://Resources/player/walk_b.svg" id="2_onrkg"]
+[ext_resource type="Shader" uid="uid://dd0ibrqwfn17" path="res://Player/rainbow.gdshader" id="3_fhl08"]
 [ext_resource type="Texture2D" uid="uid://pnfdj4vx2h65" path="res://Resources/particles/smoke_02.png" id="3_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://d2dywq7vvfcqc" path="res://Resources/player/walk_a.svg" id="4_sweqy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vtle1"]
+shader = ExtResource("3_fhl08")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 1.0
+shader_parameter/angle = 30.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i3pqv"]
 animations = [{
@@ -56,6 +63,7 @@ scale_amount_min = 0.05
 scale_amount_max = 0.1
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_vtle1")
 sprite_frames = SubResource("SpriteFrames_i3pqv")
 
 [node name="Collision" type="CollisionShape2D" parent="."]

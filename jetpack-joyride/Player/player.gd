@@ -17,6 +17,8 @@ const GRAVITY := 2000.0
 const JETPACK_POWER := 4000.0
 const TERMINAL_VELOCITY := 5000.0
 
+var invincible_until: float = 0.0
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("jetpack"):
 		velocity.y += -JETPACK_POWER * delta
@@ -58,6 +60,21 @@ func _physics_process(delta: float) -> void:
 		sprite.play("default")
 	else:
 		sprite.play("jump")
+
+	if is_invincible():
+		sprite.material.set_shader_parameter("strength", 0.5)
+	else:
+		sprite.material.set_shader_parameter("strength", 0.0)
+
+func invincible(time_seconds: float) -> void:
+	var now := Time.get_ticks_msec()
+	if invincible_until < now:
+		invincible_until = now + time_seconds * 1000
+	else:
+		invincible_until += time_seconds * 1000
+
+func is_invincible() -> bool:
+	return invincible_until > Time.get_ticks_msec()
 
 func handle_hazard_collision(_collision: KinematicCollision2D) -> void:
 	hazard_collision.emit()

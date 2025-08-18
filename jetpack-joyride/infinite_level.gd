@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var background: ScrollingTilemap = $Background
 @onready var hud: HUD = $HUD
+@onready var player: Player = $Player
 
 const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
 const BACKGROUND_TILE_CACTUS = Vector2i(2, 1)
@@ -34,7 +35,12 @@ func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 	randomize_background_timemap(tilemap)
 
 func _on_player_hazard_collision() -> void:
-	pass # Replace with function body.
+	if not player.is_invincible():
+		hud.hp -= 1
+		player.invincible(2.0)
+
+	if hud.hp == 0:
+		get_tree().quit()
 
 func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 	print("Player picked up item from ", body, " at ", coords)

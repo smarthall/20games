@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://cmn87ckekdjtf" path="res://Scroller/scroll_node.gd" id="3_5w8ni"]
 [ext_resource type="Script" uid="uid://bywpilykl0utb" path="res://Scroller/scrolling_tilemap.gd" id="3_68s5o"]
 [ext_resource type="TileSet" uid="uid://b5bpvq4gxu4dw" path="res://Resources/level-tileset-terrain.tres" id="4_148f4"]
-[ext_resource type="PackedScene" uid="uid://b3qa1pp5o3yvf" path="res://player.tscn" id="5_87hkk"]
+[ext_resource type="PackedScene" uid="uid://b3qa1pp5o3yvf" path="res://Player/player.tscn" id="5_87hkk"]
 [ext_resource type="TileSet" uid="uid://vpaufbtkfjqt" path="res://Resources/level-tileset-hazards.tres" id="7_r11wh"]
 [ext_resource type="TileSet" uid="uid://duy4dpbojd3yg" path="res://Resources/level-tileset-pickups.tres" id="8_vkx08"]
 [ext_resource type="PackedScene" uid="uid://bksdsctf17ckc" path="res://hud.tscn" id="10_vkx08"]
