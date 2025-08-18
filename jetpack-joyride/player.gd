@@ -49,8 +49,10 @@ func _physics_process(delta: float) -> void:
 
 	if collector.is_colliding():
 		for i in collector.get_collision_count():
-			if collector.get_collider(i) is TileMapLayer:
-				handle_pickup_collision(collector.get_collision_point(i), collector.get_collider(i))
+			var collider := collector.get_collider(i)
+			var collision_point := collector.get_collision_point(i)
+			if collider is TileMapLayer:
+				handle_pickup_collision(collision_point, collider)
 
 	if is_on_floor():
 		sprite.play("default")
@@ -64,4 +66,5 @@ func handle_pickup_collision(collision_point: Vector2, body: TileMapLayer) -> vo
 	var local_collision_point := body.to_local(collision_point)
 	var map_collision_point := body.local_to_map(local_collision_point)
 
-	pickup_collision.emit(body, map_collision_point)
+	if body.get_cell_tile_data(map_collision_point) != null:
+		pickup_collision.emit(body, map_collision_point)
