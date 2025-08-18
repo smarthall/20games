@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=4 uid="uid://5qicne7g6wcf"]
 
 [ext_resource type="Script" uid="uid://bfolecic8t3ii" path="res://infinite_level.gd" id="1_2e4n5"]
-[ext_resource type="Script" uid="uid://vqs4j686g12s" path="res://scroller.gd" id="2_1u2do"]
+[ext_resource type="Script" uid="uid://vqs4j686g12s" path="res://Scroller/scroller.gd" id="2_1u2do"]
 [ext_resource type="TileSet" uid="uid://5s7fintaqly2" path="res://Resources/background-tileset.tres" id="2_q80to"]
-[ext_resource type="Script" uid="uid://cmn87ckekdjtf" path="res://scroll_node.gd" id="3_5w8ni"]
-[ext_resource type="Script" uid="uid://bywpilykl0utb" path="res://scrolling_tilemap.gd" id="3_68s5o"]
+[ext_resource type="Script" uid="uid://cmn87ckekdjtf" path="res://Scroller/scroll_node.gd" id="3_5w8ni"]
+[ext_resource type="Script" uid="uid://bywpilykl0utb" path="res://Scroller/scrolling_tilemap.gd" id="3_68s5o"]
 [ext_resource type="TileSet" uid="uid://b5bpvq4gxu4dw" path="res://Resources/level-tileset-terrain.tres" id="4_148f4"]
 [ext_resource type="PackedScene" uid="uid://b3qa1pp5o3yvf" path="res://player.tscn" id="5_87hkk"]
 [ext_resource type="TileSet" uid="uid://vpaufbtkfjqt" path="res://Resources/level-tileset-hazards.tres" id="7_r11wh"]
