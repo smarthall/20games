@@ -2,15 +2,15 @@ extends Node2D
 
 @onready var background: ScrollingTilemap = $Background
 
-const TILE_BLANK = Vector2i(2, 0)
-const TILE_CACTUS = Vector2i(2, 1)
-const TILE_TREES = Vector2i(3, 1)
-const TILE_MUSHROOM = Vector2i(1, 3)
-const BACKTILES : Dictionary[int, Vector2i] = {
-	50: TILE_BLANK,
-	75: TILE_CACTUS,
-	98: TILE_TREES,
-	99: TILE_MUSHROOM,
+const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
+const BACKGROUND_TILE_CACTUS = Vector2i(2, 1)
+const BACKGROUND_TILE_TREES = Vector2i(3, 1)
+const BACKGROUND_TILE_MUSHROOM = Vector2i(1, 3)
+const BACKGROUND_TILE_WEIGHTS : Dictionary[int, Vector2i] = {
+	50: BACKGROUND_TILE_BLANK,
+	75: BACKGROUND_TILE_CACTUS,
+	98: BACKGROUND_TILE_TREES,
+	99: BACKGROUND_TILE_MUSHROOM,
 }
 
 func randomize_background_timemap(tm : TileMapLayer) -> void:
@@ -22,11 +22,11 @@ func randomize_background_timemap(tm : TileMapLayer) -> void:
 func get_random_background_tile() -> Vector2i:
 	var rand := randi_range(0, 100)
 
-	for weight in BACKTILES.keys():
+	for weight in BACKGROUND_TILE_WEIGHTS.keys():
 		if rand < weight:
-			return BACKTILES[weight]
+			return BACKGROUND_TILE_WEIGHTS[weight]
 
-	return BACKTILES[BACKTILES.keys()[0]]
+	return BACKGROUND_TILE_WEIGHTS[BACKGROUND_TILE_WEIGHTS.keys()[0]]
 
 
 func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
