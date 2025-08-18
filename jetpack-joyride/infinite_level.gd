@@ -1,19 +1,20 @@
 extends Node2D
 
 @onready var background: ScrollingTilemap = $Background
+@onready var hud: HUD = $HUD
 
 const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
 const BACKGROUND_TILE_CACTUS = Vector2i(2, 1)
 const BACKGROUND_TILE_TREES = Vector2i(3, 1)
 const BACKGROUND_TILE_MUSHROOM = Vector2i(1, 3)
-const BACKGROUND_TILE_WEIGHTS : Dictionary[int, Vector2i] = {
+const BACKGROUND_TILE_WEIGHTS: Dictionary[int, Vector2i] = {
 	50: BACKGROUND_TILE_BLANK,
 	75: BACKGROUND_TILE_CACTUS,
 	98: BACKGROUND_TILE_TREES,
 	99: BACKGROUND_TILE_MUSHROOM,
 }
 
-func randomize_background_timemap(tm : TileMapLayer) -> void:
+func randomize_background_timemap(tm: TileMapLayer) -> void:
 	for x in range(tm.get_used_rect().size.x):
 		var tile_position := Vector2i(x, 1)
 		var random_tile := get_random_background_tile()
@@ -35,7 +36,7 @@ func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 func _on_player_hazard_collision() -> void:
 	pass # Replace with function body.
 
-func _on_player_pickup_collision(body:TileMapLayer, coords:Vector2i):
+func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 	print("Player picked up item from ", body, " at ", coords)
 
 	body.erase_cell(coords)
