@@ -30,23 +30,16 @@ func create_hearts() -> void:
 		print("Heart created")
 
 func update_hearts() -> void:
-	print("-- Setting Hearts")
-	print("HP: ", hp)
 	for i in range(max_hp, 0, -2):
-		print("i=", i)
 		var this_heart: int = floor(i / 2.0) - 1
 		var heart_hp: int = hp - i + 2
-		print("Setting Heart ", this_heart, " with HP: ", heart_hp)
+
 		if heart_hp <= 0:
-			print("Heart Empty")
 			_heart_textures[this_heart].texture = heart_empty
 		elif heart_hp == 1:
-			print("Heart Half")
 			_heart_textures[this_heart].texture = heart_half
 		else: # heart_hp > 1
-			print("Heart Full")
 			_heart_textures[this_heart].texture = heart_full
-	print("-- Done")
 
 func set_hp(value: int) -> void:
 	hp = clamp(value, 0, max_hp)
