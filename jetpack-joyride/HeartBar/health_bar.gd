@@ -27,7 +27,6 @@ func create_hearts() -> void:
 		var heart = heart_prototype.instantiate()
 		add_child(heart)
 		_heart_textures.append(heart)
-		print("Heart created")
 
 func update_hearts() -> void:
 	for i in range(max_hp, 0, -2):

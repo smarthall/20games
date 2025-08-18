@@ -37,7 +37,7 @@ func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 func _on_player_hazard_collision() -> void:
 	if not player.is_invincible():
 		hud.hp -= 1
-		player.invincible(2.0)
+		player.invincible(1.0)
 
 	if hud.hp == 0:
 		get_tree().quit()
