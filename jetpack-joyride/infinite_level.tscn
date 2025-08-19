@@ -10,7 +10,7 @@
 [ext_resource type="TileSet" uid="uid://vpaufbtkfjqt" path="res://Resources/level-tileset-hazards.tres" id="7_r11wh"]
 [ext_resource type="TileSet" uid="uid://duy4dpbojd3yg" path="res://Resources/level-tileset-pickups.tres" id="8_vkx08"]
 [ext_resource type="PackedScene" uid="uid://bksdsctf17ckc" path="res://hud.tscn" id="10_vkx08"]
-[ext_resource type="PackedScene" uid="uid://cub3oixrsr3kp" path="res://HeartBar/pause.tscn" id="11_n42ve"]
+[ext_resource type="PackedScene" uid="uid://cub3oixrsr3kp" path="res://pause.tscn" id="11_n42ve"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_87hkk"]
 size = Vector2(20, 748)

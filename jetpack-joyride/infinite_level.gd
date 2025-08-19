@@ -63,9 +63,6 @@ func _on_player_hazard_collision() -> void:
 func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 	var type = body.get_cell_tile_data(coords).get_custom_data("type")
 
-	print("Player picked up item from ", body, " at ", coords)
-	print("Item Type: ", type)
-
 	body.erase_cell(coords)
 
 	if type == PICKUP_TILE_HEART:
