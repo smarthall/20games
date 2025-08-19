@@ -18,8 +18,12 @@ const JETPACK_POWER := 4000.0
 const TERMINAL_VELOCITY := 5000.0
 
 var invincible_until: float = 0.0
+var _paused := false
 
 func _physics_process(delta: float) -> void:
+	if _paused:
+		return
+
 	if Input.is_action_pressed("jetpack"):
 		velocity.y += -JETPACK_POWER * delta
 		exhaust.emitting = true
@@ -75,6 +79,16 @@ func invincible(time_seconds: float) -> void:
 
 func is_invincible() -> bool:
 	return invincible_until > Time.get_ticks_msec()
+
+func pause(paused: bool):
+	_paused = paused
+
+	set_physics_process(not paused)
+
+	if paused:
+		# FIXME: This does not seem to have any effect
+		sprite.stop()
+		exhaust.emitting = false
 
 func handle_hazard_collision(_collision: KinematicCollision2D) -> void:
 	hazard_collision.emit()

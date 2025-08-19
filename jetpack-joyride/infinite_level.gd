@@ -4,6 +4,7 @@ extends Node2D
 @onready var hud: HUD = $HUD
 @onready var player: Player = $Player
 @onready var level_scroller: Scroller = $LevelScroller
+@onready var pause: CanvasLayer = $Pause
 
 const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
 const BACKGROUND_TILE_CACTUS = Vector2i(2, 1)
@@ -75,3 +76,15 @@ func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 		hud.coins += SILVER_VALUE
 	elif type == PICKUP_TILE_GOLD_COIN:
 		hud.coins += GOLD_VALUE
+
+func _on_pause_paused(paused: bool) -> void:
+	if paused:
+		player.set_physics_process(false)
+		level_scroller.speed = 0.0
+		background.speed = 0.0
+		pause.show()
+	else:
+		player.set_physics_process(true)
+		level_scroller.speed = 500.0
+		background.speed = 100.0
+		pause.hide()
