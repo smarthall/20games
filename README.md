@@ -18,3 +18,5 @@ Uses a [color scheme](https://coolors.co/ffc857-e9724c-c5283d-481d24-255f85) fro
 
 Uses assets from Kenny Game Assets All-in-1 available here: https://kenney.itch.io/kenney-game-assets
 
+Uses a rainbow gradient shader from https://godotshaders.com/shader/moving-rainbow-gradient/
+

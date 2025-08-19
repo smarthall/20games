@@ -3,6 +3,7 @@ extends Node2D
 @onready var background: ScrollingTilemap = $Background
 @onready var hud: HUD = $HUD
 @onready var player: Player = $Player
+@onready var level_scroller: Scroller = $LevelScroller
 
 const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
 const BACKGROUND_TILE_CACTUS = Vector2i(2, 1)
@@ -30,6 +31,8 @@ func get_random_background_tile() -> Vector2i:
 
 	return BACKGROUND_TILE_WEIGHTS[BACKGROUND_TILE_WEIGHTS.keys()[0]]
 
+func _process(delta: float) -> void:
+	hud.distance += (delta * level_scroller.speed) / 100
 
 func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 	randomize_background_timemap(tilemap)
