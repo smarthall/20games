@@ -78,10 +78,11 @@ tile_set = ExtResource("8_vkx08")
 [node name="Player" parent="." instance=ExtResource("5_87hkk")]
 position = Vector2(250, 100)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="BackWall" type="Area2D" parent="."]
 position = Vector2(-10, 224)
+collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackWall"]
 shape = SubResource("RectangleShape2D_87hkk")
 
 [node name="Roof" type="StaticBody2D" parent="."]
@@ -98,4 +99,5 @@ visible = false
 [connection signal="tilemap_recycle" from="Background" to="." method="_on_background_tilemap_recycle"]
 [connection signal="hazard_collision" from="Player" to="." method="_on_player_hazard_collision"]
 [connection signal="pickup_collision" from="Player" to="." method="_on_player_pickup_collision"]
+[connection signal="body_entered" from="BackWall" to="." method="_on_back_wall_body_entered"]
 [connection signal="paused" from="Pause" to="." method="_on_pause_paused"]

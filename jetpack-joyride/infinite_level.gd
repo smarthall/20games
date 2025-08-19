@@ -51,6 +51,14 @@ func heart_pickup() -> void:
 	else:
 		player.invincible(HEART_PICKUP_INVINCIBLE_SECONDS)
 
+func hurt_player():
+	if not player.is_invincible():
+		hud.hp -= 1
+		player.invincible(HURT_INVINCIBLE_SECONDS)
+
+	if hud.hp == 0:
+		gameover.call_deferred()
+
 func gameover():
 	var tree := get_tree()
 	var cur_scene := tree.get_current_scene()
@@ -73,12 +81,7 @@ func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 	randomize_background_timemap(tilemap)
 
 func _on_player_hazard_collision() -> void:
-	if not player.is_invincible():
-		hud.hp -= 1
-		player.invincible(HURT_INVINCIBLE_SECONDS)
-
-	if hud.hp == 0:
-		gameover.call_deferred()
+	hurt_player()
 
 func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 	var type = body.get_cell_tile_data(coords).get_custom_data("type")
@@ -105,3 +108,8 @@ func _on_pause_paused(paused: bool) -> void:
 		level_scroller.speed = 500.0
 		background.speed = 100.0
 		pause.hide()
+
+
+func _on_back_wall_body_entered(body: Node2D) -> void:
+	if body is Player:
+		hurt_player()

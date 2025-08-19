@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bksdsctf17ckc"]
+[gd_scene load_steps=9 format=3 uid="uid://bksdsctf17ckc"]
 
 [ext_resource type="Script" uid="uid://d0mdwc8siycvs" path="res://hud.gd" id="1_37p78"]
+[ext_resource type="Theme" uid="uid://d1ug7xrkpx2dp" path="res://Themes/hud_theme.tres" id="2_61f8s"]
 [ext_resource type="Texture2D" uid="uid://blyqkm1n222ql" path="res://Resources/hud/heart.svg" id="2_64ctp"]
 [ext_resource type="Script" uid="uid://qgfccohbb0xx" path="res://HeartBar/health_bar.gd" id="2_a2258"]
 [ext_resource type="Texture2D" uid="uid://ceogm1vayw6c" path="res://Resources/hud/heart_half.svg" id="4_1xsix"]
 [ext_resource type="Texture2D" uid="uid://dp7im3hupy76i" path="res://Resources/hud/heart_empty.svg" id="5_rftc2"]
 [ext_resource type="Texture2D" uid="uid://c60b4n803djan" path="res://Resources/hud/coin.svg" id="6_1xsix"]
-[ext_resource type="LabelSettings" uid="uid://0lk531r1bhuo" path="res://hud_label_settings.tres" id="7_rftc2"]
+[ext_resource type="LabelSettings" uid="uid://0lk531r1bhuo" path="res://Themes/hud_label_settings.tres" id="7_rftc2"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_37p78")
@@ -18,6 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_61f8s")
 
 [node name="HeartsBar" type="HBoxContainer" parent="Control"]
 layout_mode = 1

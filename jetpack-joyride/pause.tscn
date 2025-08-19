@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cub3oixrsr3kp"]
+[gd_scene load_steps=4 format=3 uid="uid://cub3oixrsr3kp"]
 
 [ext_resource type="Script" uid="uid://dr0upu3toq2pt" path="res://pause.gd" id="1_w7tua"]
+[ext_resource type="Theme" uid="uid://bn3sciadks03l" path="res://Themes/menu_theme.tres" id="2_aq7p1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vkx08"]
 font_size = 128
@@ -16,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_aq7p1")
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
 layout_mode = 1
