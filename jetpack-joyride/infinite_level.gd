@@ -46,3 +46,5 @@ func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 	print("Player picked up item from ", body, " at ", coords)
 
 	body.erase_cell(coords)
+
+	hud.coins += 1
