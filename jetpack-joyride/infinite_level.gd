@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var game_over_scene: PackedScene = preload("res://gameover_screen.tscn")
 
-@onready var background: ScrollingTilemap = $Background
+@onready var background: Scroller = $BackgroundScroller
 @onready var hud: HUD = $HUD
 @onready var player: Player = $Player
 @onready var level_scroller: Scroller = $LevelScroller
@@ -79,6 +79,10 @@ func _process(delta: float) -> void:
 
 func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 	randomize_background_timemap(tilemap)
+
+func _on_background_scroller_setup_scroll_node(scroll_node: ScrollNode) -> void:
+	var bg: TileMapLayer = scroll_node.get_node("Background")
+	randomize_background_timemap(bg)
 
 func _on_player_hazard_collision() -> void:
 	hurt_player()
