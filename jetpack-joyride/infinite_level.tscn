@@ -93,6 +93,7 @@ shape = SubResource("RectangleShape2D_fqwvg")
 [node name="HUD" parent="." instance=ExtResource("10_vkx08")]
 
 [node name="Pause" parent="." instance=ExtResource("11_n42ve")]
+visible = false
 
 [connection signal="tilemap_recycle" from="Background" to="." method="_on_background_tilemap_recycle"]
 [connection signal="hazard_collision" from="Player" to="." method="_on_player_hazard_collision"]

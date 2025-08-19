@@ -7,7 +7,6 @@ font_size = 128
 
 [node name="Pause" type="CanvasLayer"]
 layer = 2
-visible = false
 script = ExtResource("1_w7tua")
 
 [node name="Control" type="Control" parent="."]
