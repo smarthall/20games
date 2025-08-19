@@ -1,0 +1,124 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnih3pg2pbe60"]
+
+[ext_resource type="Script" uid="uid://cc0y03fm1braj" path="res://gameover_screen.gd" id="1_no4x2"]
+[ext_resource type="Texture2D" uid="uid://c60b4n803djan" path="res://Resources/hud/coin.svg" id="2_n21ur"]
+[ext_resource type="LabelSettings" uid="uid://0lk531r1bhuo" path="res://hud_label_settings.tres" id="3_w808n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_no4x2"]
+font_size = 128
+
+[node name="GameoverScreen" type="CanvasLayer"]
+script = ExtResource("1_no4x2")
+metadata/_custom_type_script = "uid://cc0y03fm1braj"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0808286, 0.190053, 0.462951, 1)
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -347.0
+offset_right = 347.0
+offset_bottom = 175.0
+grow_horizontal = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_no4x2")
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CenterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_n21ur")
+
+[node name="CoinScoreLabel" type="Label" parent="Control/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "000"
+label_settings = ExtResource("3_w808n")
+
+[node name="DistanceScoreLabel" type="Label" parent="Control/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1045m"
+label_settings = ExtResource("3_w808n")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="CenterContainer2" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/CenterContainer/VBoxContainer/CenterContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/CenterContainer/VBoxContainer/CenterContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Score: "
+label_settings = ExtResource("3_w808n")
+
+[node name="ScoreLabel" type="Label" parent="Control/CenterContainer/VBoxContainer/CenterContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00000"
+label_settings = ExtResource("3_w808n")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -100.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="MenuButton" type="Button" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="ExitButton" type="Button" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

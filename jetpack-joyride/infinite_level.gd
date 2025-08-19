@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var game_over_scene: PackedScene = preload("res://gameover_screen.tscn")
+
 @onready var background: ScrollingTilemap = $Background
 @onready var hud: HUD = $HUD
 @onready var player: Player = $Player
@@ -25,6 +27,9 @@ const PICKUP_TILE_GOLD_COIN = "gold"
 const GOLD_VALUE = 5
 const PICKUP_TILE_HEART = "heart"
 
+const HEART_PICKUP_INVINCIBLE_SECONDS := 2.0
+const HURT_INVINCIBLE_SECONDS := 0.5
+
 func randomize_background_timemap(tm: TileMapLayer) -> void:
 	for x in range(tm.get_used_rect().size.x):
 		var tile_position := Vector2i(x, 1)
@@ -44,7 +49,22 @@ func heart_pickup() -> void:
 	if hud.hp < 6:
 		hud.hp += 1
 	else:
-		player.invincible(2.0)
+		player.invincible(HEART_PICKUP_INVINCIBLE_SECONDS)
+
+func gameover():
+	var tree := get_tree()
+	var cur_scene := tree.get_current_scene()
+
+	var game_over: GameOverScreen = game_over_scene.instantiate()
+	game_over.distance = hud.distance
+	game_over.coins = hud.coins
+	game_over.score = roundi(hud.distance + hud.coins * 10)
+
+	tree.get_root().add_child(game_over)
+	tree.set_current_scene(game_over)
+
+	# Delete this scene in the next frame
+	tree.get_root().remove_child.call_deferred(cur_scene)
 
 func _process(delta: float) -> void:
 	hud.distance += (delta * level_scroller.speed) / 100
@@ -55,10 +75,10 @@ func _on_background_tilemap_recycle(tilemap: TileMapLayer) -> void:
 func _on_player_hazard_collision() -> void:
 	if not player.is_invincible():
 		hud.hp -= 1
-		player.invincible(1.0)
+		player.invincible(HURT_INVINCIBLE_SECONDS)
 
 	if hud.hp == 0:
-		get_tree().quit()
+		gameover.call_deferred()
 
 func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 	var type = body.get_cell_tile_data(coords).get_custom_data("type")
