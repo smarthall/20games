@@ -93,7 +93,6 @@ func _get_neighbours(coords: Vector2i) -> Dictionary[Vector2i, CellContent]:
 	return neighbours
 
 func _get_terrain_type(neighbours: Dictionary[Vector2i, CellContent]) -> Vector2i:
-	print(neighbours)
 	if neighbours.get(Vector2i.UP) == CellContent.EMPTY:
 		return TERRAIN_ATLAS_GRASS_TOP
 
@@ -127,5 +126,4 @@ func to_tilemap(terrainLayer: TileMapLayer, hazardLayer: TileMapLayer, pickupLay
 	for key in _level_data:
 		var layer := _get_cell_layer(key)
 		var atlas := _get_cell_atlas(key)
-		print("Layer: ", Layer.keys()[layer], ", Atlas: ", atlas)
 		_set_layer(terrainLayer, hazardLayer, pickupLayer, layer, key, atlas)
