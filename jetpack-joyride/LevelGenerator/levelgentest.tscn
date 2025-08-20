@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=4 uid="uid://d1vr1j5meww3h"]
+
+[ext_resource type="TileSet" uid="uid://b5bpvq4gxu4dw" path="res://Resources/level-tileset-terrain.tres" id="1_6hnhs"]
+[ext_resource type="Script" uid="uid://ctqger21a1r0k" path="res://LevelGenerator/levelgentest.gd" id="1_djo45"]
+[ext_resource type="TileSet" uid="uid://vpaufbtkfjqt" path="res://Resources/level-tileset-hazards.tres" id="2_djo45"]
+[ext_resource type="Script" uid="uid://vqs4j686g12s" path="res://Scroller/scroller.gd" id="2_ruxxy"]
+[ext_resource type="TileSet" uid="uid://duy4dpbojd3yg" path="res://Resources/level-tileset-pickups.tres" id="3_q648e"]
+[ext_resource type="Script" uid="uid://cmn87ckekdjtf" path="res://Scroller/scroll_node.gd" id="3_xtme1"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_djo45")
+
+[node name="LevelScroller" type="Node2D" parent="."]
+script = ExtResource("2_ruxxy")
+speed = 500.0
+metadata/_custom_type_script = "uid://vqs4j686g12s"
+
+[node name="ScrollNodeA" type="Node2D" parent="LevelScroller"]
+visible = false
+script = ExtResource("3_xtme1")
+size = Vector2(1088, 0)
+metadata/_custom_type_script = "uid://cmn87ckekdjtf"
+
+[node name="Terrain" type="TileMapLayer" parent="LevelScroller/ScrollNodeA" groups=["Terrain"]]
+tile_map_data = PackedByteArray("AAAAAAkAJQAAAAEAAAABAAkAJQAAAAEAAAACAAkAJQAAAAEAAAADAAkAJQAAAAEAAAAEAAkAJQAAAAEAAAAFAAkAJQACAAEAAAAIAAkAJQABAAEAAAAJAAkAJQAAAAEAAAAKAAkAJQAAAAEAAAALAAkAJQAAAAEAAAAMAAkAJQAAAAEAAAANAAkAJQAAAAEAAAAOAAkAJQAAAAEAAAAPAAkAJQAAAAEAAAAQAAkAJQAAAAEAAAARAAkAJQAAAAEAAAAIAAQAJQAGAAIAAAAMAAQAJQAHAAIAAAALAAQAJQAFAAIAAAAKAAQAJQAFAAIAAAAJAAQAJQAFAAIAAAAAAAoAJQAHAAAAAAABAAoAJQAHAAAAAAACAAoAJQAHAAAAAAADAAoAJQAHAAAAAAAEAAoAJQAHAAAAAAAFAAoAJQACAAQAAAAIAAoAJQABAAQAAAAJAAoAJQAHAAAAAAAKAAoAJQAHAAAAAAALAAoAJQAHAAAAAAAMAAoAJQAHAAAAAAANAAoAJQAHAAAAAAAOAAoAJQAHAAAAAAAPAAoAJQAHAAAAAAAQAAoAJQAHAAAAAAARAAoAJQAHAAAAAAA=")
+tile_set = ExtResource("1_6hnhs")
+
+[node name="Hazards" type="TileMapLayer" parent="LevelScroller/ScrollNodeA" groups=["Hazards"]]
+tile_map_data = PackedByteArray("AAAGAAkAAQAFAAAAAAAHAAkAAQAFAAAAAAAGAAoAAQAEAAAAAAAHAAoAAQAEAAAAAAA=")
+tile_set = ExtResource("2_djo45")
+
+[node name="Pickups" type="TileMapLayer" parent="LevelScroller/ScrollNodeA" groups=["Pickups"]]
+tile_map_data = PackedByteArray("AAAJAAMAAAABAAAAAAALAAMAAAABAAAAAAANAAgAAAACAAAAAAA=")
+tile_set = ExtResource("3_q648e")
+
+[node name="ScrollNodeB" type="Node2D" parent="LevelScroller"]
+script = ExtResource("3_xtme1")
+size = Vector2(1088, 0)
+metadata/_custom_type_script = "uid://cmn87ckekdjtf"
+
+[node name="Terrain" type="TileMapLayer" parent="LevelScroller/ScrollNodeB" groups=["Terrain"]]
+tile_map_data = PackedByteArray("AAAAAAkAJQAAAAEAAAABAAkAJQAAAAEAAAACAAkAJQAAAAEAAAADAAkAJQAAAAEAAAAEAAkAJQAFAAEAABAFAAkAJQAHAAAAAAAJAAkAJQAHAAAAAAAOAAkAJQAHAAAAAAAPAAkAJQAHAAAAAAAQAAkAJQAHAAAAAAARAAkAJQAFAAEAAAAAAAoAJQAHAAAAAAABAAoAJQAHAAAAAAACAAoAJQAHAAAAAAADAAoAJQAHAAAAAAAEAAoAJQAHAAAAAAAFAAoAJQAHAAAAAAAIAAoAJQAHAAAAAAAJAAoAJQAHAAAAAAAOAAoAJQAHAAAAAAAPAAoAJQAHAAAAAAAQAAoAJQAHAAAAAAARAAoAJQAHAAAAAAAGAAkAJQAHAAAAAAAHAAkAJQAHAAAAAAAIAAkAJQAHAAAAAAAGAAoAJQAHAAAAAAAHAAoAJQAHAAAAAAAEAAgAJQAEAAEAABAFAAgAJQADAAEAABAGAAgAJQAAAAEAAAAHAAcAJQAEAAEAABAIAAcAJQADAAEAABAJAAcAJQAAAAEAAAAHAAgAJQAGAAEAABAOAAgAJQAHAAAAAAAIAAgAJQAHAAAAAAAJAAgAJQAHAAAAAAANAAIAJQAGAAIAAAAQAAIAJQAHAAIAAAAOAAIAJQAFAAIAAAAPAAIAJQAFAAIAAAAOAAcAJQADAAEAAAAPAAcAJQAEAAEAAAAPAAgAJQAFAAEAAAAQAAgAJQADAAEAAAARAAgAJQAEAAEAAAANAAcAJQABAAEAAAAKAAcAJQACAAEAAAAKAAgAJQACAAQAAAAKAAkAJQACAAQAAAAKAAoAJQACAAQAAAANAAgAJQABAAQAAAANAAkAJQABAAQAAAANAAoAJQABAAQAAAA=")
+tile_set = ExtResource("1_6hnhs")
+
+[node name="Hazards" type="TileMapLayer" parent="LevelScroller/ScrollNodeB" groups=["Hazards"]]
+tile_map_data = PackedByteArray("AAALAAcAAQACAAIAAAAMAAcAAQACAAIAAAALAAgAAQABAAIAAAALAAkAAQABAAIAAAALAAoAAQABAAIAAAAMAAoAAQABAAIAAAAMAAkAAQABAAIAAAAMAAgAAQABAAIAAAA=")
+tile_set = ExtResource("2_djo45")
+
+[node name="Pickups" type="TileMapLayer" parent="LevelScroller/ScrollNodeB" groups=["Pickups"]]
+tile_map_data = PackedByteArray("AAAOAAEAAAAAAAAAAAALAAIAAAACAAAAAAAKAAMAAAACAAAAAAAJAAQAAAACAAAAAAAIAAUAAAACAAAAAAAAAAgAAAADAAAAAAA=")
+tile_set = ExtResource("3_q648e")
+
+[connection signal="setup_scroll_node" from="LevelScroller" to="." method="_on_level_scroller_setup_scroll_node"]
