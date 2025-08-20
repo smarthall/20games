@@ -84,6 +84,7 @@ func _set_layer(terrainLayer: TileMapLayer, hazardLayer: TileMapLayer, pickupLay
 
 func _get_neighbours(coords: Vector2i) -> Dictionary[Vector2i, CellContent]:
 	var neighbours: Dictionary[Vector2i, CellContent] = {}
+	#FIXME If the coordinate is out to the left, get it from the previous level
 	for dx in [-1, 0, 1]:
 		for dy in [-1, 0, 1]:
 			var offset := Vector2i(dx, dy)
