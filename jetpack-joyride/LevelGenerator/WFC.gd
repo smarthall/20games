@@ -139,9 +139,9 @@ var tile_data: Array[Dictionary] = [
 		"atlas_loc": Vector2i(-1, -1),
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
-			Vector2i.DOWN: [CellType.TERRAIN_GRASS_TOP],
-			Vector2i.LEFT: [CellType.EMPTY],
-			Vector2i.RIGHT: [CellType.EMPTY]
+			Vector2i.DOWN: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_UPPER],
+			Vector2i.LEFT: [CellType.EMPTY, CellType.TERRAIN_RAMP_DOWN_UPPER],
+			Vector2i.RIGHT: [CellType.EMPTY, CellType.TERRAIN_RAMP_UP_UPPER]
 		}
 	},
 	# TERRAIN_SURROUNDED
@@ -257,7 +257,7 @@ class TileResolver:
 	var options: Array[CellType] = WFC.type_all() # By default everything is an option
 
 	func get_tile() -> CellType:
-		assert(collapsed)
+		assert(collapsed, "Tile has not been collapsed")
 
 		return options[0]
 
@@ -286,17 +286,18 @@ class TileResolver:
 			if cell_type in allowed and cell_type not in result:
 				result.append(cell_type)
 
-		assert(result.size() > 0, "No options left for tile")
-
 		if result.size() != options.size():
 			options = result
 			changed = true
 
+		if is_collapsed():
+			print("Tile spontaneously collapsed to ", get_tile())
+
 		return changed
 
 	func collapse() -> CellType:
-		assert(not collapsed)
-		assert(options.size() > 0)
+		assert(not collapsed, "Tile has already been collapsed")
+		assert(options.size() > 0, "No options left for tile")
 
 		var chosen := options[randi() % options.size()]
 		options = [chosen]
@@ -366,9 +367,46 @@ class Map:
 
 		return lowest_coords
 
+	func options_from_options(us: Vector2i, them: Vector2i) -> Array[CellType]:
+		assert(in_bounds(us))
+		assert(in_bounds(them))
+
+		var neighbour := us - them
+
+		var their_options := get_tile(them).options
+		var our_options: Array[CellType] = []
+		for option in their_options:
+			var allowed := type_dict[option].get_allowed(neighbour)
+			for a in allowed:
+				if a not in our_options:
+					our_options.append(a)
+
+		print("Our options from ", us, " to ", them, ": ", our_options)
+		return our_options
+
+	func recalculate_tile(coords: Vector2i) -> bool:
+		assert(in_bounds(coords))
+		var tile := get_tile(coords)
+		var changed: bool = false
+
+		for n in NEIGHBOURS:
+			var neighbour_coords := coords + n
+			if not in_bounds(neighbour_coords):
+				continue
+
+			var allowed := options_from_options(coords, neighbour_coords)
+			changed = tile.apply_allowed(allowed) or changed
+
+		print("Remaining options for ", coords, ": ", tile.options)
+
+		if changed:
+			assert(tile.count_options() > 0, "No options left for tile at: " + str(coords))
+
+		return changed
+
 	func recalculate_neighbours(coords: Vector2i) -> Array[Vector2i]:
 		var tile := get_tile(coords)
-		var changed_neighbours := []
+		var changed_neighbours: Array[Vector2i] = []
 		for n in NEIGHBOURS:
 			var neighbour_coords := coords + n
 			if not in_bounds(neighbour_coords):
@@ -378,14 +416,8 @@ class Map:
 			if neighbour.is_collapsed():
 				continue
 
-			for m in NEIGHBOURS:
-				if not in_bounds(neighbour_coords + m):
-					continue
-
-				var allowed := type_dict[get_tile(coords).get_tile()].get_allowed(-1 * m)
-				var change := neighbour.apply_allowed(allowed)
-				if change:
-					changed_neighbours.append(neighbour)
+			if recalculate_tile(neighbour_coords):
+				changed_neighbours.append(neighbour_coords)
 
 		return changed_neighbours
 
@@ -399,6 +431,7 @@ class Map:
 
 			var chosen := lowest[randi() % lowest.size()]
 			get_tile(chosen).collapse()
+			print("Collapsing tile at: ", chosen, " to ", get_tile(chosen).get_tile())
 
 			var to_recalculate: Array[Vector2i] = [chosen]
 			while to_recalculate.size() > 0:
