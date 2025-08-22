@@ -124,6 +124,13 @@ class WFCData:
 
 		tilemap.set_cell(coords, atlas_source, atlas_loc, alt)
 
+	func validate() -> bool:
+		for n in NEIGHBOURS:
+			assert(n in neighbours_allowed, "Missing neighbour: " + str(n))
+			assert(neighbours_allowed[n].size() > 0, "No allowed neighbours for: " + str(n))
+
+		return true
+
 #  _____ _ _      ____        _        
 # |_   _(_) | ___|  _ \  __ _| |_ __ _ 
 #   | | | | |/ _ \ | | |/ _` | __/ _` |
@@ -140,8 +147,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_UPPER],
-			Vector2i.LEFT: [CellType.EMPTY, CellType.TERRAIN_RAMP_DOWN_UPPER],
-			Vector2i.RIGHT: [CellType.EMPTY, CellType.TERRAIN_RAMP_UP_UPPER]
+			Vector2i.LEFT: [CellType.EMPTY, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_HARD_LEFT],
+			Vector2i.RIGHT: [CellType.EMPTY, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_HARD_RIGHT]
 		}
 	},
 	# TERRAIN_SURROUNDED
@@ -151,10 +158,10 @@ var tile_data: Array[Dictionary] = [
 		"atlas_source": TERRAIN_SOURCE,
 		"atlas_loc": Vector2i(7, 0),
 		"neighbours_allowed": {
-			Vector2i.UP: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_SURROUNDED],
+			Vector2i.UP: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_LOWER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_RAMP_UP_LOWER],
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_DOWN_LOWER]
 		}
 	},
 	# TERRAIN_GRASS_TOP
@@ -167,7 +174,7 @@ var tile_data: Array[Dictionary] = [
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
 			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER],
-			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER]
+			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_UPPER]
 		}
 	},
 	# TERRAIN_HARD_LEFT
@@ -179,8 +186,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_HARD_LEFT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_LEFT],
-			Vector2i.LEFT: [CellType.EMPTY],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.RIGHT: [CellType.EMPTY]
 		}
 	},
 	# TERRAIN_HARD_RIGHT
@@ -192,8 +199,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_HARD_RIGHT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_RIGHT],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.RIGHT: [CellType.EMPTY]
+			Vector2i.LEFT: [CellType.EMPTY],
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
 		}
 	},
 	# TERRAIN_RAMP_UP_UPPER
@@ -206,8 +213,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.TERRAIN_RAMP_UP_LOWER],
-			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_UPPER],
-			Vector2i.RIGHT: [CellType.EMPTY]
+			Vector2i.LEFT: [CellType.EMPTY],
+			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_RAMP_UP_LOWER]
 		}
 	},
 	# TERRAIN_RAMP_UP_LOWER
@@ -233,7 +240,7 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.TERRAIN_RAMP_DOWN_LOWER],
-			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_DOWN_LOWER, CellType.TERRAIN_RAMP_UP_UPPER],
+			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER],
 			Vector2i.RIGHT: [CellType.EMPTY]
 		}
 	},
@@ -247,7 +254,7 @@ var tile_data: Array[Dictionary] = [
 			Vector2i.UP: [CellType.TERRAIN_RAMP_DOWN_UPPER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
 			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_RAMP_UP_LOWER]
+			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_UPPER]
 		}
 	},
 ]
@@ -315,6 +322,49 @@ class Map:
 		for t in tile_data:
 			var data := WFCData.from_dict(t)
 			type_dict[data.cell_type] = data
+
+		assert(verify_tile_data())
+
+	func verify_tile_data() -> bool:
+		for cell_type in type_dict.keys():
+			var data := type_dict[cell_type]
+			
+			assert(data.validate())
+
+			for n in NEIGHBOURS:
+				assert(check_backreferences(data, n))
+
+		return true
+
+	func get_type_name(type: CellType) -> String:
+		return CellType.keys()[type]
+
+	func get_neighbour_name(neighbour: Vector2i) -> String:
+		match neighbour:
+			Vector2i.UP: return "UP"
+			Vector2i.DOWN: return "DOWN"
+			Vector2i.LEFT: return "LEFT"
+			Vector2i.RIGHT: return "RIGHT"
+			_ : return "UNKNOWN"
+
+	func check_backreferences(data: WFCData, n: Vector2i) -> bool:
+		var my_type := data.cell_type
+		var opposite := n * -1
+
+		for option in data.neighbours_allowed[n]:
+			assert(option in type_dict.keys(), "Neighbour type not found")
+			var referenced_type := type_dict[option]
+			if my_type == option:
+				continue
+			assert(opposite in referenced_type.neighbours_allowed.keys())
+			var backreferences := referenced_type.neighbours_allowed[opposite]
+			if not my_type in backreferences:
+				var error := "Reference from %s to %s in direction %s found, " % [get_type_name(my_type), get_type_name(option), get_neighbour_name(n)]
+				error += "but no backreference from %s to %s in direction %s found" % [get_type_name(option), get_type_name(my_type), get_neighbour_name(opposite)]
+
+				assert(false, error)
+
+		return true
 
 	func set_bounds(bounds: Vector2i) -> void:
 		_bounds = bounds
