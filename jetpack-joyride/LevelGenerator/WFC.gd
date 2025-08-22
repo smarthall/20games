@@ -19,6 +19,12 @@ enum CellType {
 	TERRAIN_RAMP_DOWN_LOWER,
 }
 
+static func type_all() -> Array[CellType]:
+	var all:Array[CellType] = []
+	for type in CellType.values():
+		all.append(type as CellType)
+	return all
+
 enum Layer {
 	TERRAIN,
 	HAZARD,
@@ -48,7 +54,7 @@ const HAZARD_SOURCE := 1
 const PICKUP_SOURCE := 0
 
 const MAX_X := 17
-const MAX_Y := 10
+const MAX_Y := 11
 
 class WFCData:
 	var cell_type: CellType
@@ -73,10 +79,50 @@ class WFCData:
 		instance.neighbours_allowed = {}
 		for n in NEIGHBOURS:
 			# If not specified, allow all tiles
-			var valid_cell_types: Array[CellType] = got_neighbours_allowed.get(n, CellType.values())
+			var valid_cell_types: Array[CellType] = [] 
+			for t in got_neighbours_allowed.get(n, WFC.type_all()):
+				valid_cell_types.append(t)
 			instance.neighbours_allowed[n] = valid_cell_types
 
 		return instance
+
+	func get_allowed(neighbour: Vector2i) -> Array[CellType]:
+		return neighbours_allowed.get(neighbour, []).duplicate()
+
+	func set_tilemaps(coords: Vector2i, terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
+		if layer == Layer.TERRAIN:
+			set_tilemap_cell(terrain, coords)
+
+			hazards.erase_cell(coords)
+			pickups.erase_cell(coords)
+
+		elif layer == Layer.HAZARD:
+			set_tilemap_cell(hazards, coords)
+
+			terrain.erase_cell(coords)
+			pickups.erase_cell(coords)
+
+		elif layer == Layer.PICKUP:
+			set_tilemap_cell(pickups, coords)
+
+			terrain.erase_cell(coords)
+			hazards.erase_cell(coords)
+
+		elif layer == Layer.CLEAR:
+			terrain.erase_cell(coords)
+			hazards.erase_cell(coords)
+			pickups.erase_cell(coords)
+
+	func set_tilemap_cell(tilemap: TileMapLayer, coords: Vector2i):
+		assert(atlas_loc != Vector2i(0, 0), "Zero atlas location")
+		var alt: int = 0
+
+		if flip_h:
+			alt |= TileSetAtlasSource.TRANSFORM_FLIP_H
+		if flip_v:
+			alt |= TileSetAtlasSource.TRANSFORM_FLIP_V
+
+		tilemap.set_cell(coords, atlas_source, atlas_loc, alt)
 
 #  _____ _ _      ____        _        
 # |_   _(_) | ___|  _ \  __ _| |_ __ _ 
@@ -88,7 +134,7 @@ var tile_data: Array[Dictionary] = [
 	# EMPTY
 	{
 		"cell_type": CellType.EMPTY,
-		"layer": Layer.TERRAIN,
+		"layer": Layer.CLEAR,
 		"atlas_source": EMPTY_SOURCE,
 		"atlas_loc": Vector2i(-1, -1),
 		"neighbours_allowed": {
@@ -205,3 +251,142 @@ var tile_data: Array[Dictionary] = [
 		}
 	},
 ]
+
+class TileResolver:
+	var collapsed: bool = false
+	var options: Array[CellType] = WFC.type_all() # By default everything is an option
+
+	func get_tile() -> CellType:
+		assert(collapsed)
+
+		return options[0]
+
+	func is_collapsed() -> bool:
+		if collapsed:
+			return true
+
+		if options.size() == 1:
+			collapsed = true
+		else:
+			collapsed = false
+
+		return collapsed
+	
+	func count_options() -> int:
+		if options.size() == 1:
+			collapsed = true
+			return 1
+
+		return options.size()
+
+	func apply_allowed(allowed: Array[CellType]) -> void:
+		var result := []
+		for cell_type in options:
+			if cell_type in allowed and cell_type not in result:
+				result.append(cell_type)
+
+		options = result
+		
+		assert(options.size() > 0, "No options left for tile at %s" % str(self))
+
+	func collapse() -> CellType:
+		assert(not collapsed)
+		assert(options.size() > 0)
+
+		var chosen := options[randi() % options.size()]
+		options = [chosen]
+		collapsed = true
+		return chosen
+
+class Map:
+	var _map: Array[TileResolver] = []
+	var _bounds: Vector2i = Vector2i(0, 0)
+
+	var type_dict: Dictionary[CellType, WFCData] = {}
+	var setup: bool = false
+
+	func _init(tile_data) -> void:
+		for t in tile_data:
+			var data := WFCData.from_dict(t)
+			type_dict[data.cell_type] = data
+
+	func set_bounds(bounds: Vector2i) -> void:
+		_bounds = bounds
+		_map.resize(bounds.x * bounds.y)
+		for i in range(_map.size()):
+			_map[i] = TileResolver.new()
+
+	func get_tile(coords: Vector2i) -> TileResolver:
+		assert(coords.x >= 0 and coords.x < _bounds.x)
+
+		return _map[index_from_coords(coords)]
+
+	func index_from_coords(coords: Vector2i) -> int:
+		assert(coords.x >= 0 and coords.x < _bounds.x)
+		assert(coords.y >= 0 and coords.y < _bounds.y)
+
+		return coords.x + (coords.y * _bounds.x)
+
+	func coords_from_index(index: int) -> Vector2i:
+		assert(index >= 0 and index < _map.size())
+		assert(index % _bounds.x < _bounds.x)
+		assert(index / _bounds.x < _bounds.y)
+
+		return Vector2i(index % _bounds.x, index / _bounds.x)
+
+	func is_collapsed() -> bool:
+		for tile in _map:
+			if not tile.is_collapsed():
+				return false
+		return true
+
+	func lowest_entropy() -> Array[Vector2i]:
+		var lowest_entropy_val := 99999
+		var lowest_coords: Array[Vector2i]= []
+		for i in range(_map.size()):
+			var options_left = _map[i].count_options()
+			if _map[i].is_collapsed():
+				continue
+
+			elif options_left < lowest_entropy_val:
+				lowest_entropy_val = options_left
+				lowest_coords = [coords_from_index(i)]
+
+			elif options_left == lowest_entropy_val:
+				lowest_coords.append(coords_from_index(i))
+
+		return lowest_coords
+
+	func collapse_waveform() -> void:
+		# FIXME: If this is the second generation, apply constraints to the first column
+
+		while not is_collapsed():
+			var lowest := lowest_entropy()
+			if lowest.size() == 0:
+				return
+
+			var chosen := lowest[randi() % lowest.size()]
+			get_tile(chosen).collapse()
+			# FIXME Update the constraints of neighbours
+
+	func to_tilemaps(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
+		for i in range(_map.size()):
+			var coords := coords_from_index(i)
+			var tile := _map[i]
+
+			if not tile.is_collapsed():
+				continue
+
+			var cell_type := tile.get_tile()
+			var data := type_dict[cell_type]
+			data.set_tilemaps(coords, terrain, hazards, pickups)
+
+func generate(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
+	var bounds := Vector2i(MAX_X, MAX_Y)
+	var map = Map.new(tile_data)
+
+	map.set_bounds(bounds)
+
+	map.collapse_waveform()
+
+	map.to_tilemaps(terrain, hazards, pickups)

@@ -1,6 +1,6 @@
 extends Node2D
 
-var level := LevelData.new()
+var level := WFC.new()
 
 func _on_level_scroller_setup_scroll_node(scroll_node: ScrollNode) -> void:
 	var terrainLayer: TileMapLayer = scroll_node.get_node("Terrain")
@@ -8,7 +8,5 @@ func _on_level_scroller_setup_scroll_node(scroll_node: ScrollNode) -> void:
 	var pickupLayer: TileMapLayer = scroll_node.get_node("Pickups")
 
 	print("-- Generating new chunk...")
-	level.generate_next()
-	print("-- Chunk generated, setting tilemap...")
-	level.to_tilemap(terrainLayer, hazardLayer, pickupLayer)
+	level.generate(terrainLayer, hazardLayer, pickupLayer)
 	print("-- Done")
