@@ -313,6 +313,14 @@ class TileResolver:
 		collapsed = true
 		return chosen
 
+	func force_collapse(t: CellType) -> void:
+		assert(t in options, "Cannot force collapse to a type that is not an option")
+
+		options = [t]
+		collapsed = true
+
+		print("Tile forced to collapse to: ", t)
+
 class Map:
 	var _map: Array[TileResolver] = []
 	var _bounds: Vector2i = Vector2i(0, 0)
@@ -488,6 +496,9 @@ class Map:
 
 	func collapse_waveform() -> void:
 		# FIXME: If this is the second generation, apply constraints to the first column
+		get_tile(Vector2i(0, 0)).force_collapse(CellType.EMPTY)
+		get_tile(Vector2i(0, 8)).force_collapse(CellType.TERRAIN_GRASS_TOP)
+		get_tile(Vector2i(0, 9)).force_collapse(CellType.TERRAIN_SURROUNDED)
 
 		while not is_collapsed():
 			var chosen := random_collapse()
