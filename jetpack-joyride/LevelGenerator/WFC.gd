@@ -228,7 +228,7 @@ var tile_data: Array[Dictionary] = [
 			Vector2i.UP: [CellType.TERRAIN_RAMP_UP_UPPER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
 			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_RAMP_DOWN_LOWER]
 		}
 	},
 	# TERRAIN_RAMP_DOWN_UPPER
@@ -253,7 +253,7 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_RAMP_DOWN_UPPER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_RAMP_UP_LOWER],
 			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_UPPER]
 		}
 	},
@@ -345,6 +345,10 @@ class Map:
 			Vector2i.DOWN: return "DOWN"
 			Vector2i.LEFT: return "LEFT"
 			Vector2i.RIGHT: return "RIGHT"
+			Vector2i(1, 1): return "UP-RIGHT"
+			Vector2i(-1, 1): return "UP-LEFT"
+			Vector2i(1, -1): return "DOWN-RIGHT"
+			Vector2i(-1, -1): return "DOWN-LEFT"
 			_ : return "UNKNOWN"
 
 	func check_backreferences(data: WFCData, n: Vector2i) -> bool:
@@ -425,16 +429,20 @@ class Map:
 
 		var their_options := get_tile(them).options
 		var our_options: Array[CellType] = []
+		var ops: String = ""
 		for option in their_options:
+			ops += get_type_name(option) + ", "
 			var allowed := type_dict[option].get_allowed(neighbour)
 			for a in allowed:
 				if a not in our_options:
 					our_options.append(a)
 
-		print("Our options from ", us, " to ", them, ": ", our_options)
+		var n := them - us
+		print("Our options from ", get_neighbour_name(n), ": ", our_options, " due to types ", ops)
 		return our_options
 
 	func recalculate_tile(coords: Vector2i) -> bool:
+		print("--- Recalculating tile at: ", coords)
 		assert(in_bounds(coords))
 		var tile := get_tile(coords)
 		var changed: bool = false
@@ -446,8 +454,8 @@ class Map:
 
 			var allowed := options_from_options(coords, neighbour_coords)
 			changed = tile.apply_allowed(allowed) or changed
-
-		print("Remaining options for ", coords, ": ", tile.options)
+			print("Remaining options for ", coords, ": ", tile.options)
+			print("")
 
 		if changed:
 			assert(tile.count_options() > 0, "No options left for tile at: " + str(coords))
