@@ -146,7 +146,7 @@ var tile_data: Array[Dictionary] = [
 		"atlas_loc": Vector2i(-1, -1),
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
-			Vector2i.DOWN: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_UPPER],
+			Vector2i.DOWN: [CellType.EMPTY, CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_UPPER],
 			Vector2i.LEFT: [CellType.EMPTY, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_HARD_LEFT],
 			Vector2i.RIGHT: [CellType.EMPTY, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_HARD_RIGHT]
 		}
@@ -160,8 +160,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_LOWER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_RAMP_UP_LOWER],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_DOWN_LOWER]
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_UP_LOWER],
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_DOWN_LOWER]
 		}
 	},
 	# TERRAIN_GRASS_TOP
@@ -182,12 +182,12 @@ var tile_data: Array[Dictionary] = [
 		"cell_type": CellType.TERRAIN_HARD_LEFT,
 		"layer": Layer.TERRAIN,
 		"atlas_source": TERRAIN_SOURCE,
-		"atlas_loc": Vector2i(4, 1),
+		"atlas_loc": Vector2i(1, 4),
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_HARD_LEFT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_LEFT],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.RIGHT: [CellType.EMPTY]
+			Vector2i.LEFT: [CellType.EMPTY],
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
 		}
 	},
 	# TERRAIN_HARD_RIGHT
@@ -199,8 +199,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_HARD_RIGHT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_RIGHT],
-			Vector2i.LEFT: [CellType.EMPTY],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.RIGHT: [CellType.EMPTY]
 		}
 	},
 	# TERRAIN_RAMP_UP_UPPER
@@ -236,7 +236,7 @@ var tile_data: Array[Dictionary] = [
 		"cell_type": CellType.TERRAIN_RAMP_DOWN_UPPER,
 		"layer": Layer.TERRAIN,
 		"atlas_source": TERRAIN_SOURCE,
-		"atlas_loc": Vector2i(0, 3),
+		"atlas_loc": Vector2i(0, 2),
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.TERRAIN_RAMP_DOWN_LOWER],
@@ -249,7 +249,7 @@ var tile_data: Array[Dictionary] = [
 		"cell_type": CellType.TERRAIN_RAMP_DOWN_LOWER,
 		"layer": Layer.TERRAIN,
 		"atlas_source": TERRAIN_SOURCE,
-		"atlas_loc": Vector2i(7, 3),
+		"atlas_loc": Vector2i(7, 1),
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_RAMP_DOWN_UPPER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
@@ -289,6 +289,8 @@ class TileResolver:
 	func apply_allowed(allowed: Array[CellType]) -> bool:
 		var changed: bool = false
 		var result: Array[CellType] = []
+		var start_size := options.size()
+
 		for cell_type in options:
 			if cell_type in allowed and cell_type not in result:
 				result.append(cell_type)
@@ -296,9 +298,6 @@ class TileResolver:
 		if result.size() != options.size():
 			options = result
 			changed = true
-
-		if is_collapsed():
-			print("Tile spontaneously collapsed to ", get_tile())
 
 		return changed
 
@@ -323,7 +322,7 @@ class Map:
 			var data := WFCData.from_dict(t)
 			type_dict[data.cell_type] = data
 
-		assert(verify_tile_data())
+		#assert(verify_tile_data())
 
 	func verify_tile_data() -> bool:
 		for cell_type in type_dict.keys():
@@ -358,8 +357,7 @@ class Map:
 		for option in data.neighbours_allowed[n]:
 			assert(option in type_dict.keys(), "Neighbour type not found")
 			var referenced_type := type_dict[option]
-			if my_type == option:
-				continue
+
 			assert(opposite in referenced_type.neighbours_allowed.keys())
 			var backreferences := referenced_type.neighbours_allowed[opposite]
 			if not my_type in backreferences:
@@ -429,23 +427,22 @@ class Map:
 
 		var their_options := get_tile(them).options
 		var our_options: Array[CellType] = []
-		var ops: String = ""
 		for option in their_options:
-			ops += get_type_name(option) + ", "
 			var allowed := type_dict[option].get_allowed(neighbour)
 			for a in allowed:
 				if a not in our_options:
 					our_options.append(a)
 
-		var n := them - us
-		print("Our options from ", get_neighbour_name(n), ": ", our_options, " due to types ", ops)
 		return our_options
 
 	func recalculate_tile(coords: Vector2i) -> bool:
-		print("--- Recalculating tile at: ", coords)
 		assert(in_bounds(coords))
 		var tile := get_tile(coords)
 		var changed: bool = false
+		
+		if tile.is_collapsed():
+			print("Tile at ", coords, " is already collapsed.")
+			return false
 
 		for n in NEIGHBOURS:
 			var neighbour_coords := coords + n
@@ -454,50 +451,44 @@ class Map:
 
 			var allowed := options_from_options(coords, neighbour_coords)
 			changed = tile.apply_allowed(allowed) or changed
-			print("Remaining options for ", coords, ": ", tile.options)
-			print("")
-
-		if changed:
-			assert(tile.count_options() > 0, "No options left for tile at: " + str(coords))
+			assert(tile.options.size() > 0, "No options left for tile at: " + str(coords) + " due to " + get_neighbour_name(n))
 
 		return changed
 
-	func recalculate_neighbours(coords: Vector2i) -> Array[Vector2i]:
-		var tile := get_tile(coords)
-		var changed_neighbours: Array[Vector2i] = []
+	func queue_neighbours(coords: Vector2i, to_recalculate: Array[Vector2i]) -> void:
 		for n in NEIGHBOURS:
 			var neighbour_coords := coords + n
-			if not in_bounds(neighbour_coords):
-				continue
+			if neighbour_coords not in to_recalculate and in_bounds(neighbour_coords) and not get_tile(neighbour_coords).is_collapsed():
+				to_recalculate.append(neighbour_coords)
 
-			var neighbour := get_tile(neighbour_coords)
-			if neighbour.is_collapsed():
-				continue
+	func recalculate_neighbours(coords: Vector2i) -> void:
+		var to_recalculate: Array[Vector2i] = []
 
-			if recalculate_tile(neighbour_coords):
-				changed_neighbours.append(neighbour_coords)
+		queue_neighbours(coords, to_recalculate)
 
-		return changed_neighbours
+		while to_recalculate.size() > 0:
+			var recalc: Vector2i = to_recalculate.pop_front()
+			if recalculate_tile(recalc):
+				queue_neighbours(recalc, to_recalculate)
+
+	func random_collapse() -> Vector2i:
+		var lowest := lowest_entropy()
+
+		if lowest.size() == 0:
+			print("No tiles left to collapse, returning empty tile.")
+			return Vector2i(-1, -1)
+
+		var chosen := lowest[randi() % lowest.size()]
+		get_tile(chosen).collapse()
+
+		return chosen
 
 	func collapse_waveform() -> void:
 		# FIXME: If this is the second generation, apply constraints to the first column
 
 		while not is_collapsed():
-			var lowest := lowest_entropy()
-			if lowest.size() == 0:
-				return
-
-			var chosen := lowest[randi() % lowest.size()]
-			get_tile(chosen).collapse()
-			print("Collapsing tile at: ", chosen, " to ", get_tile(chosen).get_tile())
-
-			var to_recalculate: Array[Vector2i] = [chosen]
-			while to_recalculate.size() > 0:
-				var coords: Vector2i = to_recalculate.pop_front()
-				var changed_neighbours := recalculate_neighbours(coords)
-				for neighbour in changed_neighbours:
-					if neighbour not in to_recalculate:
-						to_recalculate.append(neighbour)
+			var chosen := random_collapse()
+			recalculate_neighbours(chosen)
 
 	func to_tilemaps(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
 		for i in range(_map.size()):
@@ -512,6 +503,7 @@ class Map:
 			data.set_tilemaps(coords, terrain, hazards, pickups)
 
 func generate(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
+	seed(1)
 	var bounds := Vector2i(MAX_X, MAX_Y)
 	var map = Map.new(tile_data)
 

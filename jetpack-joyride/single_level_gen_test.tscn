@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c00w7hpdxsnig"]
+
+[ext_resource type="Script" uid="uid://rf1op7w3dlnr" path="res://single_level_gen_test.gd" id="1_bblil"]
+[ext_resource type="TileSet" uid="uid://b5bpvq4gxu4dw" path="res://Resources/level-tileset-terrain.tres" id="2_8lpqr"]
+[ext_resource type="TileSet" uid="uid://vpaufbtkfjqt" path="res://Resources/level-tileset-hazards.tres" id="3_qcnag"]
+[ext_resource type="TileSet" uid="uid://duy4dpbojd3yg" path="res://Resources/level-tileset-pickups.tres" id="4_yvctm"]
+
+[node name="SingleLevelGenTest" type="Node2D"]
+script = ExtResource("1_bblil")
+
+[node name="Terrain" type="TileMapLayer" parent="." groups=["Terrain"]]
+tile_set = ExtResource("2_8lpqr")
+
+[node name="Hazards" type="TileMapLayer" parent="." groups=["Hazards"]]
+tile_set = ExtResource("3_qcnag")
+
+[node name="Pickups" type="TileMapLayer" parent="." groups=["Pickups"]]
+tile_set = ExtResource("4_yvctm")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.01
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
