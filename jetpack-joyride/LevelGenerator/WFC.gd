@@ -55,6 +55,8 @@ class WFCData:
 	var layer: Layer
 	var atlas_source: int
 	var atlas_loc: Vector2i
+	var flip_h: bool
+	var flip_v: bool
 
 	var neighbours_allowed: Dictionary[Vector2i, Array]
 
@@ -64,6 +66,8 @@ class WFCData:
 		instance.layer = data.get("layer", Layer.TERRAIN)
 		instance.atlas_source = data.get("atlas_source", -1)
 		instance.atlas_loc = data.get("atlas_loc", Vector2i(-1, -1))
+		instance.flip_h = data.get("flip_h", false)
+		instance.flip_v = data.get("flip_v", false)
 
 		var got_neighbours_allowed = data.get("neighbours_allowed", {})
 		instance.neighbours_allowed = {}
@@ -116,8 +120,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP],
-			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP]
+			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER],
+			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER]
 		}
 	},
 	# TERRAIN_HARD_LEFT
@@ -144,6 +148,60 @@ var tile_data: Array[Dictionary] = [
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_RIGHT],
 			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
 			Vector2i.RIGHT: [CellType.EMPTY]
+		}
+	},
+	# TERRAIN_RAMP_UP_UPPER
+	{
+		"cell_type": CellType.TERRAIN_RAMP_UP_UPPER,
+		"layer": Layer.TERRAIN,
+		"atlas_source": TERRAIN_SOURCE,
+		"atlas_loc": Vector2i(0, 2),
+		"flip_h": true,
+		"neighbours_allowed": {
+			Vector2i.UP: [CellType.EMPTY],
+			Vector2i.DOWN: [CellType.TERRAIN_RAMP_UP_LOWER],
+			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_UPPER],
+			Vector2i.RIGHT: [CellType.EMPTY]
+		}
+	},
+	# TERRAIN_RAMP_UP_LOWER
+	{
+		"cell_type": CellType.TERRAIN_RAMP_UP_LOWER,
+		"layer": Layer.TERRAIN,
+		"atlas_source": TERRAIN_SOURCE,
+		"atlas_loc": Vector2i(7, 1),
+		"flip_h": true,
+		"neighbours_allowed": {
+			Vector2i.UP: [CellType.TERRAIN_RAMP_UP_UPPER],
+			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_LOWER],
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
+		}
+	},
+	# TERRAIN_RAMP_DOWN_UPPER
+	{
+		"cell_type": CellType.TERRAIN_RAMP_DOWN_UPPER,
+		"layer": Layer.TERRAIN,
+		"atlas_source": TERRAIN_SOURCE,
+		"atlas_loc": Vector2i(0, 3),
+		"neighbours_allowed": {
+			Vector2i.UP: [CellType.EMPTY],
+			Vector2i.DOWN: [CellType.TERRAIN_RAMP_DOWN_LOWER],
+			Vector2i.LEFT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_DOWN_LOWER, CellType.TERRAIN_RAMP_UP_UPPER],
+			Vector2i.RIGHT: [CellType.EMPTY]
+		}
+	},
+	# TERRAIN_RAMP_DOWN_LOWER
+	{
+		"cell_type": CellType.TERRAIN_RAMP_DOWN_LOWER,
+		"layer": Layer.TERRAIN,
+		"atlas_source": TERRAIN_SOURCE,
+		"atlas_loc": Vector2i(7, 3),
+		"neighbours_allowed": {
+			Vector2i.UP: [CellType.TERRAIN_RAMP_DOWN_UPPER],
+			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.RIGHT: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_RAMP_UP_LOWER]
 		}
 	},
 ]
