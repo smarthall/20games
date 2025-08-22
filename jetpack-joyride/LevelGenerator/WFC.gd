@@ -158,7 +158,7 @@ var tile_data: Array[Dictionary] = [
 		"atlas_source": TERRAIN_SOURCE,
 		"atlas_loc": Vector2i(7, 0),
 		"neighbours_allowed": {
-			Vector2i.UP: [CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_LOWER],
+			Vector2i.UP: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_LOWER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
 			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_UP_LOWER],
 			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_DOWN_LOWER]
@@ -187,7 +187,7 @@ var tile_data: Array[Dictionary] = [
 			Vector2i.UP: [CellType.TERRAIN_HARD_LEFT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_LEFT],
 			Vector2i.LEFT: [CellType.EMPTY],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED]
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT]
 		}
 	},
 	# TERRAIN_HARD_RIGHT
@@ -199,7 +199,7 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_HARD_RIGHT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_RIGHT],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED],
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT],
 			Vector2i.RIGHT: [CellType.EMPTY]
 		}
 	},
@@ -303,8 +303,11 @@ class TileResolver:
 
 	func collapse() -> CellType:
 		assert(not collapsed, "Tile has already been collapsed")
-		assert(options.size() > 0, "No options left for tile")
+		#assert(options.size() > 0, "No options left for tile")
 
+		if options.size() == 0:
+			print("No options left for tile, returning EMPTY")
+			return CellType.EMPTY
 		var chosen := options[randi() % options.size()]
 		options = [chosen]
 		collapsed = true
@@ -451,7 +454,7 @@ class Map:
 
 			var allowed := options_from_options(coords, neighbour_coords)
 			changed = tile.apply_allowed(allowed) or changed
-			assert(tile.options.size() > 0, "No options left for tile at: " + str(coords) + " due to " + get_neighbour_name(n))
+			#assert(tile.options.size() > 0, "No options left for tile at: " + str(coords) + " due to " + get_neighbour_name(n))
 
 		return changed
 

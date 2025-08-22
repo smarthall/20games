@@ -14,7 +14,7 @@ var marked_cell: Vector2i
 var to_recalculate: Array[Vector2i] = []
 
 func _ready() -> void:
-	seed(1)
+	seed(2)
 
 	map.set_bounds(Vector2i(level.MAX_X, level.MAX_Y))
 
@@ -24,10 +24,20 @@ func _process(delta: float) -> void:
 		var mouse_pos: Vector2 = get_global_mouse_position()
 		var cell: Vector2i = terrainLayer.local_to_map(terrainLayer.to_local(mouse_pos))
 		print("Cell at " + str(cell) + " is " + str(terrainLayer.get_cell_atlas_coords(cell)))
+		if not map.in_bounds(cell):
+			print("Cell is out of bounds")
+			return
 		if map.get_tile(cell).is_collapsed():
 			print(".. has collapsed to " + str(map.get_tile(cell).get_tile()))
 		else:
 			print(".. has not yet collapsed.")
+			var ops: String = ""
+			for o in map.get_tile(cell).options:
+				ops += map.get_type_name(o) + ", "
+			print("Options are: " + ops)
+
+	if Input.is_action_just_pressed("jetpack"):
+		timer.stop()
 
 func _on_timer_timeout() -> void:
 	if map.is_collapsed():
