@@ -324,9 +324,9 @@ class TileResolver:
 class Map:
 	var _map: Array[TileResolver] = []
 	var _bounds: Vector2i = Vector2i(0, 0)
+	var _iteration := 0
 
 	var type_dict: Dictionary[CellType, WFCData] = {}
-	var setup: bool = false
 
 	func _init(tile_data) -> void:
 		for t in tile_data:
@@ -379,11 +379,16 @@ class Map:
 
 		return true
 
-	func set_bounds(bounds: Vector2i) -> void:
-		_bounds = bounds
-		_map.resize(bounds.x * bounds.y)
+	func _init_map() -> void:
+		assert(_bounds.x > 0 and _bounds.y > 0, "Map bounds not set")
+
+		_map.resize(_bounds.x * _bounds.y)
 		for i in range(_map.size()):
 			_map[i] = TileResolver.new()
+
+	func set_bounds(bounds: Vector2i) -> void:
+		_bounds = bounds
+		_init_map()
 
 	func in_bounds(coords: Vector2i) -> bool:
 		return coords.x >= 0 and coords.x < _bounds.x and coords.y >= 0 and coords.y < _bounds.y
@@ -494,11 +499,40 @@ class Map:
 
 		return chosen
 
+	func setup_map() -> void:
+		assert(_bounds.x > 0 and _bounds.y > 0, "Map bounds not set")
+
+		const FIRST_ITERATION_COLUMN: Array[CellType] = [
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.EMPTY,
+			CellType.TERRAIN_GRASS_TOP,
+			CellType.TERRAIN_SURROUNDED,
+		]
+
+		var oldmap := _map.duplicate()
+		_init_map()
+
+		if _iteration == 0:
+			for i in range(FIRST_ITERATION_COLUMN.size()):
+				get_tile(Vector2i(0, i)).force_collapse(FIRST_ITERATION_COLUMN[i])
+		else:
+			# Apply constraints to the first column based on the old map
+			for i in range(_bounds.y):
+				var old_tile: TileResolver = oldmap[index_from_coords(Vector2i(MAX_X - 1, i))]
+				if old_tile.is_collapsed():
+					get_tile(Vector2i(0, i)).force_collapse(old_tile.get_tile())
+
+		_iteration += 1
+
 	func collapse_waveform() -> void:
-		# FIXME: If this is the second generation, apply constraints to the first column
-		get_tile(Vector2i(0, 0)).force_collapse(CellType.EMPTY)
-		get_tile(Vector2i(0, 8)).force_collapse(CellType.TERRAIN_GRASS_TOP)
-		get_tile(Vector2i(0, 9)).force_collapse(CellType.TERRAIN_SURROUNDED)
+		assert(_bounds.x > 0 and _bounds.y > 0, "Map bounds not set")
 
 		while not is_collapsed():
 			var chosen := random_collapse()
@@ -526,3 +560,15 @@ func generate(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLaye
 	map.collapse_waveform()
 
 	map.to_tilemaps(terrain, hazards, pickups)
+
+func setup() -> Map:
+	var bounds := Vector2i(MAX_X, MAX_Y)
+	var map = Map.new(tile_data)
+
+	map.set_bounds(bounds)
+
+	return map
+
+func next(m: Map) -> void:
+	m.setup_map()
+	m.collapse_waveform()
