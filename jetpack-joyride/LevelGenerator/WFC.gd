@@ -279,15 +279,20 @@ class TileResolver:
 
 		return options.size()
 
-	func apply_allowed(allowed: Array[CellType]) -> void:
-		var result := []
+	func apply_allowed(allowed: Array[CellType]) -> bool:
+		var changed: bool = false
+		var result: Array[CellType] = []
 		for cell_type in options:
 			if cell_type in allowed and cell_type not in result:
 				result.append(cell_type)
 
-		options = result
-		
-		assert(options.size() > 0, "No options left for tile at %s" % str(self))
+		assert(result.size() > 0, "No options left for tile")
+
+		if result.size() != options.size():
+			options = result
+			changed = true
+
+		return changed
 
 	func collapse() -> CellType:
 		assert(not collapsed)
@@ -316,13 +321,17 @@ class Map:
 		for i in range(_map.size()):
 			_map[i] = TileResolver.new()
 
+	func in_bounds(coords: Vector2i) -> bool:
+		return coords.x >= 0 and coords.x < _bounds.x and coords.y >= 0 and coords.y < _bounds.y
+
 	func get_tile(coords: Vector2i) -> TileResolver:
-		assert(coords.x >= 0 and coords.x < _bounds.x)
+		assert(in_bounds(coords))
 
 		return _map[index_from_coords(coords)]
 
 	func index_from_coords(coords: Vector2i) -> int:
-		assert(coords.x >= 0 and coords.x < _bounds.x)
+		assert(in_bounds(coords))
+
 		assert(coords.y >= 0 and coords.y < _bounds.y)
 
 		return coords.x + (coords.y * _bounds.x)
@@ -357,6 +366,29 @@ class Map:
 
 		return lowest_coords
 
+	func recalculate_neighbours(coords: Vector2i) -> Array[Vector2i]:
+		var tile := get_tile(coords)
+		var changed_neighbours := []
+		for n in NEIGHBOURS:
+			var neighbour_coords := coords + n
+			if not in_bounds(neighbour_coords):
+				continue
+
+			var neighbour := get_tile(neighbour_coords)
+			if neighbour.is_collapsed():
+				continue
+
+			for m in NEIGHBOURS:
+				if not in_bounds(neighbour_coords + m):
+					continue
+
+				var allowed := type_dict[get_tile(coords).get_tile()].get_allowed(-1 * m)
+				var change := neighbour.apply_allowed(allowed)
+				if change:
+					changed_neighbours.append(neighbour)
+
+		return changed_neighbours
+
 	func collapse_waveform() -> void:
 		# FIXME: If this is the second generation, apply constraints to the first column
 
@@ -367,7 +399,14 @@ class Map:
 
 			var chosen := lowest[randi() % lowest.size()]
 			get_tile(chosen).collapse()
-			# FIXME Update the constraints of neighbours
+
+			var to_recalculate: Array[Vector2i] = [chosen]
+			while to_recalculate.size() > 0:
+				var coords: Vector2i = to_recalculate.pop_front()
+				var changed_neighbours := recalculate_neighbours(coords)
+				for neighbour in changed_neighbours:
+					if neighbour not in to_recalculate:
+						to_recalculate.append(neighbour)
 
 	func to_tilemaps(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
 		for i in range(_map.size()):
