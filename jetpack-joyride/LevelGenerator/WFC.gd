@@ -147,8 +147,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.EMPTY],
 			Vector2i.DOWN: [CellType.EMPTY, CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_RAMP_DOWN_UPPER],
-			Vector2i.LEFT: [CellType.EMPTY, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_HARD_LEFT],
-			Vector2i.RIGHT: [CellType.EMPTY, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_HARD_RIGHT]
+			Vector2i.LEFT: [CellType.EMPTY, CellType.TERRAIN_RAMP_DOWN_UPPER, CellType.TERRAIN_HARD_RIGHT],
+			Vector2i.RIGHT: [CellType.EMPTY, CellType.TERRAIN_RAMP_UP_UPPER, CellType.TERRAIN_HARD_LEFT]
 		}
 	},
 	# TERRAIN_SURROUNDED
@@ -160,8 +160,8 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_GRASS_TOP, CellType.TERRAIN_RAMP_UP_LOWER, CellType.TERRAIN_RAMP_DOWN_LOWER],
 			Vector2i.DOWN: [CellType.TERRAIN_SURROUNDED],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_UP_LOWER],
-			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_DOWN_LOWER]
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_LEFT, CellType.TERRAIN_RAMP_UP_LOWER],
+			Vector2i.RIGHT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT, CellType.TERRAIN_RAMP_DOWN_LOWER]
 		}
 	},
 	# TERRAIN_GRASS_TOP
@@ -199,7 +199,7 @@ var tile_data: Array[Dictionary] = [
 		"neighbours_allowed": {
 			Vector2i.UP: [CellType.TERRAIN_HARD_RIGHT],
 			Vector2i.DOWN: [CellType.TERRAIN_HARD_RIGHT],
-			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_RIGHT],
+			Vector2i.LEFT: [CellType.TERRAIN_SURROUNDED, CellType.TERRAIN_HARD_LEFT],
 			Vector2i.RIGHT: [CellType.EMPTY]
 		}
 	},
@@ -325,7 +325,7 @@ class Map:
 			var data := WFCData.from_dict(t)
 			type_dict[data.cell_type] = data
 
-		#assert(verify_tile_data())
+		assert(verify_tile_data())
 
 	func verify_tile_data() -> bool:
 		for cell_type in type_dict.keys():
@@ -506,7 +506,7 @@ class Map:
 			data.set_tilemaps(coords, terrain, hazards, pickups)
 
 func generate(terrain: TileMapLayer, hazards: TileMapLayer, pickups: TileMapLayer) -> void:
-	seed(1)
+	#seed(1)
 	var bounds := Vector2i(MAX_X, MAX_Y)
 	var map = Map.new(tile_data)
 
