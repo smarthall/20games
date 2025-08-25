@@ -108,6 +108,7 @@ shape = SubResource("RectangleShape2D_fqwvg")
 visible = false
 
 [connection signal="setup_scroll_node" from="BackgroundScroller" to="." method="_on_background_scroller_setup_scroll_node"]
+[connection signal="setup_scroll_node" from="LevelScroller" to="." method="_on_level_scroller_setup_scroll_node"]
 [connection signal="hazard_collision" from="Player" to="." method="_on_player_hazard_collision"]
 [connection signal="pickup_collision" from="Player" to="." method="_on_player_pickup_collision"]
 [connection signal="body_entered" from="BackWall" to="." method="_on_back_wall_body_entered"]

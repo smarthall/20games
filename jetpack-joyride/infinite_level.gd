@@ -8,6 +8,14 @@ extends Node2D
 @onready var level_scroller: Scroller = $LevelScroller
 @onready var pause: CanvasLayer = $Pause
 
+const LEVEL_PARTS: Array[PackedScene] = [
+	preload("res://LevelParts/hill.tscn"),
+	preload("res://LevelParts/lake.tscn"),
+	preload("res://LevelParts/lava.tscn"),
+	preload("res://LevelParts/waterfall.tscn"),
+	preload("res://LevelParts/platforms.tscn"),
+]
+
 const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
 const BACKGROUND_TILE_CACTUS = Vector2i(2, 1)
 const BACKGROUND_TILE_TREES = Vector2i(3, 1)
@@ -29,6 +37,16 @@ const PICKUP_TILE_HEART = "heart"
 
 const HEART_PICKUP_INVINCIBLE_SECONDS := 2.0
 const HURT_INVINCIBLE_SECONDS := 0.5
+
+func _on_level_scroller_setup_scroll_node(scroll_node:ScrollNode) -> void:
+	# Delete all the scroll_node children
+	for child in scroll_node.get_children():
+		child.queue_free()
+
+	# Load a random level part
+	var level_part := LEVEL_PARTS[randi_range(0, LEVEL_PARTS.size() - 1)]
+	var instance := level_part.instantiate()
+	scroll_node.add_child(instance)
 
 func randomize_background_timemap(tm: TileMapLayer) -> void:
 	for x in range(tm.get_used_rect().size.x):
