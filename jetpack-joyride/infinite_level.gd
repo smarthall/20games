@@ -9,11 +9,14 @@ extends Node2D
 @onready var pause: CanvasLayer = $Pause
 
 const LEVEL_PARTS: Array[PackedScene] = [
+	preload("res://LevelParts/bucket.tscn"),
+	preload("res://LevelParts/comet.tscn"),
 	preload("res://LevelParts/hill.tscn"),
 	preload("res://LevelParts/lake.tscn"),
 	preload("res://LevelParts/lava.tscn"),
-	preload("res://LevelParts/waterfall.tscn"),
 	preload("res://LevelParts/platforms.tscn"),
+	preload("res://LevelParts/walls.tscn"),
+	preload("res://LevelParts/waterfall.tscn"),
 ]
 
 const BACKGROUND_TILE_BLANK = Vector2i(2, 0)
@@ -37,16 +40,6 @@ const PICKUP_TILE_HEART = "heart"
 
 const HEART_PICKUP_INVINCIBLE_SECONDS := 2.0
 const HURT_INVINCIBLE_SECONDS := 0.5
-
-func _on_level_scroller_setup_scroll_node(scroll_node:ScrollNode) -> void:
-	# Delete all the scroll_node children
-	for child in scroll_node.get_children():
-		child.queue_free()
-
-	# Load a random level part
-	var level_part := LEVEL_PARTS[randi_range(0, LEVEL_PARTS.size() - 1)]
-	var instance := level_part.instantiate()
-	scroll_node.add_child(instance)
 
 func randomize_background_timemap(tm: TileMapLayer) -> void:
 	for x in range(tm.get_used_rect().size.x):
@@ -92,6 +85,10 @@ func gameover():
 	# Delete this scene in the next frame
 	tree.get_root().remove_child.call_deferred(cur_scene)
 
+func _init() -> void:
+	# Seed the random number generator on time
+	seed(Time.get_unix_time_from_system())
+
 func _process(delta: float) -> void:
 	hud.distance += (delta * level_scroller.speed) / 100
 
@@ -135,3 +132,13 @@ func _on_pause_paused(paused: bool) -> void:
 func _on_back_wall_body_entered(body: Node2D) -> void:
 	if body is Player:
 		hurt_player()
+
+func _on_level_scroller_setup_scroll_node(scroll_node:ScrollNode) -> void:
+	# Delete all the scroll_node children
+	for child in scroll_node.get_children():
+		child.queue_free()
+
+	# Load a random level part
+	var level_part := LEVEL_PARTS[randi_range(0, LEVEL_PARTS.size() - 1)]
+	var instance := level_part.instantiate()
+	scroll_node.add_child(instance)
