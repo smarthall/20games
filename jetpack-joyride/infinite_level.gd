@@ -14,7 +14,9 @@ const LEVEL_PARTS: Array[PackedScene] = [
 	preload("res://LevelParts/hill.tscn"),
 	preload("res://LevelParts/lake.tscn"),
 	preload("res://LevelParts/lava.tscn"),
+	preload("res://LevelParts/love.tscn"),
 	preload("res://LevelParts/platforms.tscn"),
+	preload("res://LevelParts/squeeze.tscn"),
 	preload("res://LevelParts/walls.tscn"),
 	preload("res://LevelParts/waterfall.tscn"),
 ]
