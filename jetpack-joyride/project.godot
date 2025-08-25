@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Jetpack Joyride"
+config/name="Aliens Run!"
 run/main_scene="uid://7rtowywc3y3j"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0.0823529, 0.188235, 0.462745, 1)
