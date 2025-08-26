@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://5qicne7g6wcf"]
+[gd_scene load_steps=16 format=4 uid="uid://5qicne7g6wcf"]
 
 [ext_resource type="Script" uid="uid://bfolecic8t3ii" path="res://infinite_level.gd" id="1_2e4n5"]
 [ext_resource type="Script" uid="uid://vqs4j686g12s" path="res://Scroller/scroller.gd" id="2_1u2do"]
@@ -9,7 +9,10 @@
 [ext_resource type="TileSet" uid="uid://vpaufbtkfjqt" path="res://Resources/level-tileset-hazards.tres" id="7_r11wh"]
 [ext_resource type="TileSet" uid="uid://duy4dpbojd3yg" path="res://Resources/level-tileset-pickups.tres" id="8_vkx08"]
 [ext_resource type="PackedScene" uid="uid://bksdsctf17ckc" path="res://hud.tscn" id="10_vkx08"]
+[ext_resource type="AudioStream" uid="uid://da5ekas27ey6s" path="res://Resources/sounds/Cheerful Annoyance.ogg" id="11_73eyl"]
 [ext_resource type="PackedScene" uid="uid://cub3oixrsr3kp" path="res://pause.tscn" id="11_n42ve"]
+[ext_resource type="AudioStream" uid="uid://d3q1x8oqwciik" path="res://Resources/sounds/coin5.ogg" id="12_73eyl"]
+[ext_resource type="AudioStream" uid="uid://di337ueimfcuc" path="res://Resources/sounds/coin1.ogg" id="13_fa15l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_87hkk"]
 size = Vector2(20, 748)
@@ -106,6 +109,23 @@ shape = SubResource("RectangleShape2D_fqwvg")
 
 [node name="Pause" parent="." instance=ExtResource("11_n42ve")]
 visible = false
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_73eyl")
+volume_db = -9.811
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="Coin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_73eyl")
+max_polyphony = 4
+bus = &"Effects"
+
+[node name="Heart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_fa15l")
+max_polyphony = 2
+bus = &"Effects"
 
 [connection signal="setup_scroll_node" from="BackgroundScroller" to="." method="_on_background_scroller_setup_scroll_node"]
 [connection signal="setup_scroll_node" from="LevelScroller" to="." method="_on_level_scroller_setup_scroll_node"]

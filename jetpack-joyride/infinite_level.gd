@@ -7,6 +7,8 @@ extends Node2D
 @onready var player: Player = $Player
 @onready var level_scroller: Scroller = $LevelScroller
 @onready var pause: CanvasLayer = $Pause
+@onready var coin: AudioStreamPlayer = $Coin
+@onready var heart: AudioStreamPlayer = $Heart
 
 const LEVEL_PARTS: Array[PackedScene] = [
 	preload("res://LevelParts/bucket.tscn"),
@@ -64,6 +66,8 @@ func heart_pickup() -> void:
 	else:
 		player.invincible(HEART_PICKUP_INVINCIBLE_SECONDS)
 
+	heart.play()
+
 func hurt_player():
 	if not player.is_invincible():
 		hud.hp -= 1
@@ -113,10 +117,13 @@ func _on_player_pickup_collision(body: TileMapLayer, coords: Vector2i):
 		heart_pickup()
 	elif type == PICKUP_TILE_BRONZE_COIN:
 		hud.coins += BRONZE_VALUE
+		coin.play()
 	elif type == PICKUP_TILE_SILVER_COIN:
 		hud.coins += SILVER_VALUE
+		coin.play()
 	elif type == PICKUP_TILE_GOLD_COIN:
 		hud.coins += GOLD_VALUE
+		coin.play()
 
 func _on_pause_paused(paused: bool) -> void:
 	if paused:
