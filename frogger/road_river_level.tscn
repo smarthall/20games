@@ -1,38 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3wq76g4ylclu"]
+[gd_scene load_steps=14 format=3 uid="uid://b3wq76g4ylclu"]
 
 [ext_resource type="Script" uid="uid://ddbns8oebdyyv" path="res://road_river_level.gd" id="1_cxa6n"]
 [ext_resource type="PackedScene" uid="uid://lpl6rmsbu5t" path="res://obstacle.tscn" id="2_vsm0p"]
-[ext_resource type="Script" uid="uid://ciprwv1x1g5r3" path="res://assets/obstacle_config.gd" id="4_oqwdi"]
-
-[sub_resource type="Resource" id="Resource_6272n"]
-script = ExtResource("4_oqwdi")
-speed = 200.0
-width = 110.0
-metadata/_custom_type_script = "uid://ciprwv1x1g5r3"
-
-[sub_resource type="Resource" id="Resource_phr2k"]
-script = ExtResource("4_oqwdi")
-speed = -110.0
-width = 110.0
-metadata/_custom_type_script = "uid://ciprwv1x1g5r3"
-
-[sub_resource type="Resource" id="Resource_bp3bd"]
-script = ExtResource("4_oqwdi")
-speed = 75.0
-width = 110.0
-metadata/_custom_type_script = "uid://ciprwv1x1g5r3"
-
-[sub_resource type="Resource" id="Resource_oqwdi"]
-script = ExtResource("4_oqwdi")
-speed = -154.0
-width = 110.0
-metadata/_custom_type_script = "uid://ciprwv1x1g5r3"
-
-[sub_resource type="Resource" id="Resource_pk60h"]
-script = ExtResource("4_oqwdi")
-speed = -170.0
-width = 110.0
-metadata/_custom_type_script = "uid://ciprwv1x1g5r3"
+[ext_resource type="Resource" uid="uid://cg5ow8m801nru" path="res://obstacle_configs/car_row_1.tres" id="3_pk60h"]
+[ext_resource type="Resource" uid="uid://bw4doe2ydpu8y" path="res://obstacle_configs/car_row_2.tres" id="4_phr2k"]
+[ext_resource type="Resource" uid="uid://5uv7i1lkwk26" path="res://obstacle_configs/car_row_3.tres" id="5_gjgfy"]
+[ext_resource type="Resource" uid="uid://ba1kg465jnnno" path="res://obstacle_configs/car_row_4.tres" id="6_bfrqa"]
+[ext_resource type="Resource" uid="uid://boamdlwdcg1x5" path="res://obstacle_configs/car_row_5.tres" id="7_fjl6j"]
+[ext_resource type="Resource" uid="uid://c2amqhvksqe7l" path="res://obstacle_configs/log_row_1.tres" id="8_fjl6j"]
+[ext_resource type="Resource" uid="uid://cbijx2wvgev6a" path="res://obstacle_configs/log_row_2.tres" id="9_1ob4c"]
+[ext_resource type="Resource" uid="uid://cxjfhvwxyyehi" path="res://obstacle_configs/log_row_3.tres" id="10_dhvvd"]
+[ext_resource type="Resource" uid="uid://c63en5qtjtngh" path="res://obstacle_configs/log_row_4.tres" id="11_mbykt"]
+[ext_resource type="Resource" uid="uid://cfawsmbewmk6i" path="res://obstacle_configs/log_row_5.tres" id="12_lkled"]
+[ext_resource type="PackedScene" uid="uid://c3781xov5dfpa" path="res://goal.tscn" id="13_1ob4c"]
 
 [node name="RoadRiverLevel" type="Node2D"]
 script = ExtResource("1_cxa6n")
@@ -65,25 +45,65 @@ offset_right = 1152.0
 offset_bottom = 225.0
 color = Color(0.427493, 0.427493, 0.427493, 1)
 
-[node name="CarRow1" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(950, 22.5)
-config = SubResource("Resource_6272n")
+[node name="CarRow1Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(420, 22.5)
+config = ExtResource("3_pk60h")
 
-[node name="CarRow2" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(500, 67.5)
-config = SubResource("Resource_phr2k")
+[node name="CarRow1Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 22.5)
+config = ExtResource("3_pk60h")
 
-[node name="CarRow3" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(980, 112.5)
-config = SubResource("Resource_bp3bd")
+[node name="CarRow1Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(840, 22.5)
+config = ExtResource("3_pk60h")
 
-[node name="CarRow4" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(35, 157.5)
-config = SubResource("Resource_oqwdi")
+[node name="CarRow2Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(631, 67.5)
+config = ExtResource("4_phr2k")
 
-[node name="CarRow5" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(322, 202.5)
-config = SubResource("Resource_pk60h")
+[node name="CarRow2Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 67.5)
+config = ExtResource("4_phr2k")
+
+[node name="CarRow3Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 112.5)
+config = ExtResource("5_gjgfy")
+
+[node name="CarRow3Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(420, 112.5)
+config = ExtResource("5_gjgfy")
+
+[node name="CarRow3Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(840, 112.5)
+config = ExtResource("5_gjgfy")
+
+[node name="CarRow4Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow4Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(315.5, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow4Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(631, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow4Vehicle4" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(946.5, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow5Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 202.5)
+config = ExtResource("7_fjl6j")
+
+[node name="CarRow5Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(420, 202.5)
+config = ExtResource("7_fjl6j")
+
+[node name="CarRow5Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(840, 202.5)
+config = ExtResource("7_fjl6j")
 
 [node name="Water" type="Node2D" parent="."]
 
@@ -91,6 +111,43 @@ config = SubResource("Resource_pk60h")
 offset_right = 1152.0
 offset_bottom = 275.0
 color = Color(0.278431, 0.627451, 1, 1)
+
+[node name="LogRow1Log1" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 73)
+config = ExtResource("8_fjl6j")
+
+[node name="LogRow2Log1" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(224, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="LogRow3Log1" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(442, 163)
+config = ExtResource("10_dhvvd")
+
+[node name="LogRow4Log1" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(973, 208)
+config = ExtResource("11_mbykt")
+
+[node name="LogRow5Log1" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(412, 253)
+config = ExtResource("12_lkled")
+
+[node name="EndZone" type="Node2D" parent="Water"]
+
+[node name="Goal1" parent="Water/EndZone" instance=ExtResource("13_1ob4c")]
+position = Vector2(115.2, 25)
+
+[node name="Goal2" parent="Water/EndZone" instance=ExtResource("13_1ob4c")]
+position = Vector2(345.6, 25)
+
+[node name="Goal3" parent="Water/EndZone" instance=ExtResource("13_1ob4c")]
+position = Vector2(576, 25)
+
+[node name="Goal4" parent="Water/EndZone" instance=ExtResource("13_1ob4c")]
+position = Vector2(806.4, 25)
+
+[node name="Goal5" parent="Water/EndZone" instance=ExtResource("13_1ob4c")]
+position = Vector2(1036.8, 25)
 
 [node name="StartZone" type="Node2D" parent="."]
 position = Vector2(0, 550)

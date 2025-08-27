@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://bv1tvpfffmwof" path="res://obstacle.gd" id="1_sl1jc"]
 [ext_resource type="Texture2D" uid="uid://dged0e0ny22kt" path="res://assets/car_placeholder.png" id="2_aubd6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcbvg"]
-size = Vector2(100, 35)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_vcivv"]
 animations = [{
 "frames": [{
@@ -17,15 +14,19 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcbvg"]
+resource_local_to_scene = true
+size = Vector2(210, 35)
+
 [node name="Obstacle" type="Node2D"]
 script = ExtResource("1_sl1jc")
 metadata/_custom_type_script = "uid://bv1tvpfffmwof"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vcivv")
+frame_progress = 0.0204428
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_qcbvg")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_vcivv")
-frame_progress = 0.259026

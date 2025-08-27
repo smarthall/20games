@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3781xov5dfpa"]
+
+[ext_resource type="Texture2D" uid="uid://3tehtsxj77pj" path="res://assets/lilypad.png" id="1_6k3qi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0qle8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6k3qi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6k3qi"]
+radius = 20.0
+
+[node name="Goal" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0qle8")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_6k3qi")

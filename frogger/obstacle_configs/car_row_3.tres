@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ObstacleConfig" load_steps=4 format=3 uid="uid://5uv7i1lkwk26"]
+
+[ext_resource type="Texture2D" uid="uid://dged0e0ny22kt" path="res://assets/car_placeholder.png" id="1_svpbn"]
+[ext_resource type="Script" uid="uid://ciprwv1x1g5r3" path="res://assets/obstacle_config.gd" id="2_62twl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j8227"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_svpbn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("2_62twl")
+animation = SubResource("SpriteFrames_j8227")
+speed = 120.0
+width = 110.0
+metadata/_custom_type_script = "uid://ciprwv1x1g5r3"
