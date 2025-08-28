@@ -116,20 +116,108 @@ color = Color(0.278431, 0.627451, 1, 1)
 position = Vector2(0, 73)
 config = ExtResource("8_fjl6j")
 
-[node name="LogRow2Log1" parent="Water" instance=ExtResource("2_vsm0p")]
-position = Vector2(224, 118)
+[node name="LogRow1Log2" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(343, 73)
+config = ExtResource("8_fjl6j")
+
+[node name="LogRow1Log3" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(686, 73)
+config = ExtResource("8_fjl6j")
+
+[node name="LogRow1Log4" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(1029, 73)
+config = ExtResource("8_fjl6j")
+
+[node name="TurtleRow2Group1A" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(25, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group1B" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(90, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group1C" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(155, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group1D" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(220, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group2A" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(425, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group2B" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(490, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group2C" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(555, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group2D" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(620, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group3A" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(825, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group3B" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(890, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group3C" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(955, 118)
+config = ExtResource("9_1ob4c")
+
+[node name="TurtleRow2Group3D" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(1020, 118)
 config = ExtResource("9_1ob4c")
 
 [node name="LogRow3Log1" parent="Water" instance=ExtResource("2_vsm0p")]
-position = Vector2(442, 163)
+position = Vector2(0, 163)
+config = ExtResource("10_dhvvd")
+
+[node name="LogRow3Log2" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(831, 163)
 config = ExtResource("10_dhvvd")
 
 [node name="LogRow4Log1" parent="Water" instance=ExtResource("2_vsm0p")]
-position = Vector2(973, 208)
+position = Vector2(0, 208)
 config = ExtResource("11_mbykt")
 
-[node name="LogRow5Log1" parent="Water" instance=ExtResource("2_vsm0p")]
+[node name="LogRow4Log2" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(457, 208)
+config = ExtResource("11_mbykt")
+
+[node name="LogRow4Log3" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(914, 208)
+config = ExtResource("11_mbykt")
+
+[node name="TurtleRow5Group1A" parent="Water" instance=ExtResource("2_vsm0p")]
 position = Vector2(412, 253)
+config = ExtResource("12_lkled")
+
+[node name="TurtleRow5Group1B" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(347, 253)
+config = ExtResource("12_lkled")
+
+[node name="TurtleRow5Group1C" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(282, 253)
+config = ExtResource("12_lkled")
+
+[node name="TurtleRow5Group2A" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(1013, 253)
+config = ExtResource("12_lkled")
+
+[node name="TurtleRow5Group2B" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(948, 253)
+config = ExtResource("12_lkled")
+
+[node name="TurtleRow5Group2C" parent="Water" instance=ExtResource("2_vsm0p")]
+position = Vector2(883, 253)
 config = ExtResource("12_lkled")
 
 [node name="EndZone" type="Node2D" parent="Water"]

@@ -17,6 +17,7 @@ animations = [{
 [resource]
 script = ExtResource("2_6qkg5")
 animation = SubResource("SpriteFrames_45d7o")
-speed = 320.0
+speed = 200.0
 width = 220.0
+collision_x_offset = 0.0
 metadata/_custom_type_script = "uid://ciprwv1x1g5r3"

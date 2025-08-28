@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b0tfhwpia2hm4" path="res://assets/log_placeholder.png" id="1_sebxl"]
 [ext_resource type="Script" uid="uid://ciprwv1x1g5r3" path="res://assets/obstacle_config.gd" id="2_d8lt4"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_45d7o"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_sebxl"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -16,7 +16,8 @@ animations = [{
 
 [resource]
 script = ExtResource("2_d8lt4")
-animation = SubResource("SpriteFrames_45d7o")
-speed = 200.0
+animation = SubResource("SpriteFrames_sebxl")
+speed = 260.0
 width = 220.0
+collision_x_offset = 0.0
 metadata/_custom_type_script = "uid://ciprwv1x1g5r3"

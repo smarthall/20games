@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ObstacleConfig" load_steps=4 format=3 uid="uid://cbijx2wvgev6a"]
 
-[ext_resource type="Texture2D" uid="uid://b0tfhwpia2hm4" path="res://assets/log_placeholder.png" id="1_cfq0v"]
+[ext_resource type="Texture2D" uid="uid://c3u2vbauhwo6x" path="res://assets/turtle.png" id="1_cfq0v"]
 [ext_resource type="Script" uid="uid://ciprwv1x1g5r3" path="res://assets/obstacle_config.gd" id="2_4g35h"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_45d7o"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4g35h"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -16,7 +16,8 @@ animations = [{
 
 [resource]
 script = ExtResource("2_4g35h")
-animation = SubResource("SpriteFrames_45d7o")
-speed = 122.0
-width = 220.0
+animation = SubResource("SpriteFrames_4g35h")
+speed = -122.0
+width = 50.0
+collision_x_offset = 5.0
 metadata/_custom_type_script = "uid://ciprwv1x1g5r3"

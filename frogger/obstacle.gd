@@ -15,6 +15,9 @@ signal rewind
 
 const COLLISION_MARGIN := 10.0
 
+func is_landable() -> bool:
+	return config.landable
+
 func _ready() -> void:
 	update_objects()
 
@@ -41,3 +44,6 @@ func update_objects() -> void:
 
 	if _collision_shape && _collision_shape.shape.size.x != config.width - COLLISION_MARGIN:
 		_collision_shape.shape.size.x = config.width - COLLISION_MARGIN
+
+	if _collision_shape && _collision_shape.position.x != config.collision_x_offset:
+		_collision_shape.position.x = config.collision_x_offset
