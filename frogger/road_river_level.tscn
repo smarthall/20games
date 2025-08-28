@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b3wq76g4ylclu"]
+[gd_scene load_steps=15 format=3 uid="uid://b3wq76g4ylclu"]
 
 [ext_resource type="Script" uid="uid://ddbns8oebdyyv" path="res://road_river_level.gd" id="1_cxa6n"]
 [ext_resource type="PackedScene" uid="uid://lpl6rmsbu5t" path="res://obstacle.tscn" id="2_vsm0p"]
@@ -13,6 +13,7 @@
 [ext_resource type="Resource" uid="uid://c63en5qtjtngh" path="res://obstacle_configs/log_row_4.tres" id="11_mbykt"]
 [ext_resource type="Resource" uid="uid://cfawsmbewmk6i" path="res://obstacle_configs/log_row_5.tres" id="12_lkled"]
 [ext_resource type="PackedScene" uid="uid://c3781xov5dfpa" path="res://goal.tscn" id="13_1ob4c"]
+[ext_resource type="PackedScene" uid="uid://dmxp1hm14qa41" path="res://player.tscn" id="14_dhvvd"]
 
 [node name="RoadRiverLevel" type="Node2D"]
 script = ExtResource("1_cxa6n")
@@ -36,74 +37,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
-
-[node name="Road" type="Node2D" parent="."]
-position = Vector2(0, 325)
-
-[node name="ColorRect" type="ColorRect" parent="Road"]
-offset_right = 1152.0
-offset_bottom = 225.0
-color = Color(0.427493, 0.427493, 0.427493, 1)
-
-[node name="CarRow1Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(420, 22.5)
-config = ExtResource("3_pk60h")
-
-[node name="CarRow1Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(0, 22.5)
-config = ExtResource("3_pk60h")
-
-[node name="CarRow1Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(840, 22.5)
-config = ExtResource("3_pk60h")
-
-[node name="CarRow2Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(631, 67.5)
-config = ExtResource("4_phr2k")
-
-[node name="CarRow2Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(0, 67.5)
-config = ExtResource("4_phr2k")
-
-[node name="CarRow3Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(0, 112.5)
-config = ExtResource("5_gjgfy")
-
-[node name="CarRow3Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(420, 112.5)
-config = ExtResource("5_gjgfy")
-
-[node name="CarRow3Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(840, 112.5)
-config = ExtResource("5_gjgfy")
-
-[node name="CarRow4Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(0, 157.5)
-config = ExtResource("6_bfrqa")
-
-[node name="CarRow4Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(315.5, 157.5)
-config = ExtResource("6_bfrqa")
-
-[node name="CarRow4Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(631, 157.5)
-config = ExtResource("6_bfrqa")
-
-[node name="CarRow4Vehicle4" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(946.5, 157.5)
-config = ExtResource("6_bfrqa")
-
-[node name="CarRow5Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(0, 202.5)
-config = ExtResource("7_fjl6j")
-
-[node name="CarRow5Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(420, 202.5)
-config = ExtResource("7_fjl6j")
-
-[node name="CarRow5Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
-position = Vector2(840, 202.5)
-config = ExtResource("7_fjl6j")
 
 [node name="Water" type="Node2D" parent="."]
 
@@ -237,6 +170,82 @@ position = Vector2(806.4, 25)
 [node name="Goal5" parent="Water/EndZone" instance=ExtResource("13_1ob4c")]
 position = Vector2(1036.8, 25)
 
+[node name="SafeZone" type="Node2D" parent="."]
+position = Vector2(0, 275)
+
+[node name="ColorRect" type="ColorRect" parent="SafeZone"]
+offset_right = 1152.0
+offset_bottom = 50.0
+color = Color(1, 0.541176, 0.439216, 1)
+
+[node name="Road" type="Node2D" parent="."]
+position = Vector2(0, 325)
+
+[node name="ColorRect" type="ColorRect" parent="Road"]
+offset_right = 1152.0
+offset_bottom = 225.0
+color = Color(0.427493, 0.427493, 0.427493, 1)
+
+[node name="CarRow1Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(420, 22.5)
+config = ExtResource("3_pk60h")
+
+[node name="CarRow1Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 22.5)
+config = ExtResource("3_pk60h")
+
+[node name="CarRow1Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(840, 22.5)
+config = ExtResource("3_pk60h")
+
+[node name="CarRow2Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(631, 67.5)
+config = ExtResource("4_phr2k")
+
+[node name="CarRow2Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 67.5)
+config = ExtResource("4_phr2k")
+
+[node name="CarRow3Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 112.5)
+config = ExtResource("5_gjgfy")
+
+[node name="CarRow3Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(420, 112.5)
+config = ExtResource("5_gjgfy")
+
+[node name="CarRow3Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(840, 112.5)
+config = ExtResource("5_gjgfy")
+
+[node name="CarRow4Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow4Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(315.5, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow4Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(631, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow4Vehicle4" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(946.5, 157.5)
+config = ExtResource("6_bfrqa")
+
+[node name="CarRow5Vehicle1" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(0, 202.5)
+config = ExtResource("7_fjl6j")
+
+[node name="CarRow5Vehicle2" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(420, 202.5)
+config = ExtResource("7_fjl6j")
+
+[node name="CarRow5Vehicle3" parent="Road" instance=ExtResource("2_vsm0p")]
+position = Vector2(840, 202.5)
+config = ExtResource("7_fjl6j")
+
 [node name="StartZone" type="Node2D" parent="."]
 position = Vector2(0, 550)
 
@@ -245,10 +254,6 @@ offset_right = 1152.0
 offset_bottom = 50.0
 color = Color(0.662452, 0.662452, 0.662452, 1)
 
-[node name="SafeZone" type="Node2D" parent="."]
-position = Vector2(0, 275)
-
-[node name="ColorRect" type="ColorRect" parent="SafeZone"]
-offset_right = 1152.0
-offset_bottom = 50.0
-color = Color(1, 0.541176, 0.439216, 1)
+[node name="Player" parent="StartZone" instance=ExtResource("14_dhvvd")]
+position = Vector2(576, 22.5)
+jump_distance = 45.0
