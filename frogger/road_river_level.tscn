@@ -35,6 +35,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -53.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -175,11 +176,11 @@ position = Vector2(0, 275)
 
 [node name="ColorRect" type="ColorRect" parent="SafeZone"]
 offset_right = 1152.0
-offset_bottom = 50.0
+offset_bottom = 45.0
 color = Color(1, 0.541176, 0.439216, 1)
 
 [node name="Road" type="Node2D" parent="."]
-position = Vector2(0, 325)
+position = Vector2(0, 320)
 
 [node name="ColorRect" type="ColorRect" parent="Road"]
 offset_right = 1152.0
@@ -247,7 +248,7 @@ position = Vector2(840, 202.5)
 config = ExtResource("7_fjl6j")
 
 [node name="StartZone" type="Node2D" parent="."]
-position = Vector2(0, 550)
+position = Vector2(0, 545)
 
 [node name="ColorRect" type="ColorRect" parent="StartZone"]
 offset_right = 1152.0
@@ -255,5 +256,8 @@ offset_bottom = 50.0
 color = Color(0.662452, 0.662452, 0.662452, 1)
 
 [node name="Player" parent="StartZone" instance=ExtResource("14_dhvvd")]
+unique_name_in_owner = true
 position = Vector2(576, 22.5)
 jump_distance = 45.0
+
+[connection signal="player_death" from="StartZone/Player" to="." method="_on_player_player_death"]

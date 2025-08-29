@@ -24,7 +24,7 @@ metadata/_custom_type_script = "uid://bv1tvpfffmwof"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vcivv")
-frame_progress = 0.0337689
+frame_progress = 0.849711
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
