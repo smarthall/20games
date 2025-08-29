@@ -47,3 +47,9 @@ func update_objects() -> void:
 
 	if _collision_shape && _collision_shape.position.x != config.collision_x_offset:
 		_collision_shape.position.x = config.collision_x_offset
+		if config.landable:
+			_collision_shape.add_to_group("platforms")
+			_collision_shape.remove_from_group("killers")
+		else:
+			_collision_shape.remove_from_group("platforms")
+			_collision_shape.add_to_group("killers")

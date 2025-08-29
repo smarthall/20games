@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 
+[global_group]
+
+killers="Objects the kill the player"
+platforms="Objects that the player can sit on"
+
 [input]
 
 up={
