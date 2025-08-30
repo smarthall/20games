@@ -2,6 +2,7 @@ extends Node2D
 class_name Player
 
 signal player_death
+signal player_score
 
 @export var jump_distance: float = 0.0
 @export var jump_time: float = 0.15
@@ -32,6 +33,8 @@ func _physics_process(delta: float) -> void:
 
 	elif Input.is_action_just_pressed("up"):
 		_in_air = true
+	
+		reparent(get_tree().get_root())
 
 		var tween := create_tween()
 		tween.set_trans(Tween.TRANS_CUBIC)
@@ -43,6 +46,8 @@ func _physics_process(delta: float) -> void:
 
 	elif Input.is_action_just_pressed("down"):
 		_in_air = true
+
+		reparent(get_tree().get_root())
 
 		var tween := create_tween()
 		tween.set_trans(Tween.TRANS_CUBIC)
@@ -57,19 +62,30 @@ func _physics_process(delta: float) -> void:
 		var collider = _ray.get_collider(0)
 		if collider.is_in_group("killers"):
 			_die()
-		if collider.is_in_group("platforms"):
-			_land_on(collider)
 
-func _die():
+func _reset_position() -> void:
 	if get_parent() != _default_parent:
 		_default_parent.add_child(self)
 
 	global_position = _initial_pos
 
-	player_death.emit()
+func _score() -> void:
+	_reset_position()
+	player_score.emit()
 
-func _land_on(platform: Node2D) -> void:
-	pass
+func _die():
+	_reset_position()
+	player_death.emit()
 
 func land() -> void:
 	_in_air = false
+
+	_ray.force_shapecast_update()
+	if _ray.is_colliding():
+		var collider = _ray.get_collider(0)
+		if collider.is_in_group("platforms"):
+			reparent(collider)
+
+		elif collider.is_in_group("goal"):
+			collider.get_parent().score()
+			_score()

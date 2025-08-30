@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://dnncygqau3gv"]
+
+[ext_resource type="Texture2D" uid="uid://5e8tdegjnsxn" path="res://assets/frogger.png" id="1_q18y8"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_q18y8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

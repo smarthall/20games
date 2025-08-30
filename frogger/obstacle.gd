@@ -6,8 +6,8 @@ signal rewind
 
 @export var config: ObstacleConfig
 
-@onready var _collision_shape: CollisionShape2D = $StaticBody2D/CollisionShape2D
-@onready var _collision_body: StaticBody2D = $StaticBody2D
+@onready var _collision_shape: CollisionShape2D = $ObstacleBody/CollisionShape2D
+@onready var _collision_body: StaticBody2D = $ObstacleBody
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var _half_width: float = config.width / 2
