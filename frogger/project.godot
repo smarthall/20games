@@ -24,6 +24,7 @@ window/stretch/aspect="keep_width"
 
 killers="Objects the kill the player"
 platforms="Objects that the player can sit on"
+goal="Targets to land on at the end of the level"
 
 [input]
 

@@ -20,4 +20,5 @@ animation = SubResource("SpriteFrames_4g35h")
 speed = -122.0
 width = 50.0
 collision_x_offset = 5.0
+landable = true
 metadata/_custom_type_script = "uid://ciprwv1x1g5r3"

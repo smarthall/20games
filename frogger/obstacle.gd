@@ -7,6 +7,7 @@ signal rewind
 @export var config: ObstacleConfig
 
 @onready var _collision_shape: CollisionShape2D = $StaticBody2D/CollisionShape2D
+@onready var _collision_body: StaticBody2D = $StaticBody2D
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var _half_width: float = config.width / 2
@@ -39,17 +40,18 @@ func _process(delta: float) -> void:
 		rewind.emit()
 
 func update_objects() -> void:
-	if config.animation && _sprite && _sprite.sprite_frames != config.animation:
+	if config.animation and _sprite and _sprite.sprite_frames != config.animation:
 		_sprite.sprite_frames = config.animation
 
-	if _collision_shape && _collision_shape.shape.size.x != config.width - COLLISION_MARGIN:
+	if _collision_shape and _collision_shape.shape.size.x != config.width - COLLISION_MARGIN:
 		_collision_shape.shape.size.x = config.width - COLLISION_MARGIN
 
-	if _collision_shape && _collision_shape.position.x != config.collision_x_offset:
+	if _collision_shape and _collision_shape.position.x != config.collision_x_offset:
 		_collision_shape.position.x = config.collision_x_offset
-		if config.landable:
-			_collision_shape.add_to_group("platforms")
-			_collision_shape.remove_from_group("killers")
-		else:
-			_collision_shape.remove_from_group("platforms")
-			_collision_shape.add_to_group("killers")
+
+	if _collision_body and config.landable:
+		_collision_body.add_to_group("platforms")
+		_collision_body.remove_from_group("killers")
+	elif _collision_body and not config.landable:
+		_collision_body.remove_from_group("platforms")
+		_collision_body.add_to_group("killers")
